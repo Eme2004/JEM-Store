@@ -690,3 +690,299 @@ body {
         background-color: $jem-porcelain;
     }
 }
+
+// --------------------------------------------------
+// Catálogo JEM
+// --------------------------------------------------
+
+.catalog-page {
+    min-height: 80vh;
+    padding: 4.5rem 0 6rem;
+    background-color: $jem-porcelain;
+}
+
+.catalog-header {
+    max-width: 760px;
+    margin-bottom: 3.5rem;
+}
+
+.catalog-kicker {
+    color: $jem-merlot;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18rem;
+    text-transform: uppercase;
+}
+
+.catalog-title {
+    color: $jem-obsidian;
+    font-size: 3.25rem;
+    line-height: 1;
+}
+
+.catalog-subtitle {
+    max-width: 650px;
+    color: $jem-ash;
+    font-size: 1rem;
+}
+
+.catalog-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding: 1rem 0;
+    border-top: 1px solid $jem-stone;
+    border-bottom: 1px solid $jem-stone;
+}
+
+.catalog-count {
+    color: $jem-ash;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06rem;
+}
+
+
+// --------------------------------------------------
+// Tarjeta de producto
+// --------------------------------------------------
+
+.product-card {
+    height: 100%;
+}
+
+.product-card-image {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background-color: $jem-stone;
+    text-decoration: none;
+}
+
+.product-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.product-card:hover .product-card-image img {
+    transform: scale(1.02);
+}
+
+.product-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: $jem-stone;
+    color: $jem-ink;
+}
+
+.product-placeholder span {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.35rem;
+}
+
+.product-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.4rem 0.65rem;
+    background-color: $jem-merlot;
+    color: $jem-white;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08rem;
+    text-transform: uppercase;
+}
+
+.product-card-body {
+    padding: 1.1rem 0 0.5rem;
+}
+
+.product-category {
+    color: $jem-ash;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06rem;
+    text-transform: uppercase;
+}
+
+.product-name {
+    margin-bottom: 0.5rem;
+    color: $jem-obsidian;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.product-price {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: $jem-obsidian;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.product-price-old {
+    color: $jem-ash;
+    text-decoration: line-through;
+}
+
+.product-price-sale {
+    color: $jem-merlot;
+}
+
+.catalog-empty {
+    padding: 5rem 2rem;
+    background-color: $jem-white;
+    text-align: center;
+}
+
+.catalog-empty h2 {
+    font-size: 1.5rem;
+}
+
+.catalog-empty p {
+    color: $jem-ash;
+}
+
+.catalog-pagination {
+    margin-top: 4rem;
+}
+
+
+// --------------------------------------------------
+// Catálogo - Responsive
+// --------------------------------------------------
+
+@media (max-width: 767.98px) {
+    .catalog-page {
+        padding: 3rem 0 4rem;
+    }
+
+    .catalog-header {
+        margin-bottom: 2.5rem;
+    }
+
+    .catalog-title {
+        font-size: 2.5rem;
+    }
+
+    .product-badge {
+        top: 0.65rem;
+        left: 0.65rem;
+    }
+}
+
+// --------------------------------------------------
+// Footer JEM
+// --------------------------------------------------
+
+.jem-footer {
+    padding: 5rem 0 2rem;
+    background-color: $jem-obsidian;
+    color: $jem-white;
+}
+
+.jem-footer-logo {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    color: $jem-white;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.18rem;
+    text-decoration: none;
+}
+
+.jem-footer-logo:hover {
+    color: $jem-sky;
+}
+
+.jem-footer-description {
+    max-width: 430px;
+    margin-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+.jem-footer-signature {
+    color: $jem-sky;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-style: italic;
+}
+
+.jem-footer-title {
+    margin-bottom: 1.4rem;
+    color: $jem-white;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14rem;
+    text-transform: uppercase;
+}
+
+.jem-footer-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.jem-footer-list li + li {
+    margin-top: 0.75rem;
+}
+
+.jem-footer-list a {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.jem-footer-list a:hover {
+    color: $jem-sky;
+}
+
+.jem-footer-text {
+    max-width: 300px;
+    margin-bottom: 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.88rem;
+    line-height: 1.8;
+}
+
+.jem-footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 4.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.72rem;
+}
+
+
+// --------------------------------------------------
+// Footer JEM - Responsive
+// --------------------------------------------------
+
+@media (max-width: 767.98px) {
+    .jem-footer {
+        padding: 3.5rem 0 1.5rem;
+    }
+
+    .jem-footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 3rem;
+    }
+}

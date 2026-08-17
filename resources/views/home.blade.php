@@ -15,7 +15,7 @@
                 Moda y accesorios para un estilo moderno, simple y auténtico.
             </p>
 
-            <a href="#coleccion" class="btn btn-dark btn-lg px-4">
+            <a href="{{ route('products.index') }}" class="btn btn-dark btn-lg px-4">
                 Ver colección
             </a>
         </div>
