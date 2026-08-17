@@ -29,6 +29,7 @@
 
                 <div class="row g-4">
 
+                    {{-- Información personal --}}
                     <div class="col-12 col-lg-5">
                         <div class="account-panel account-panel-profile h-100">
 
@@ -43,6 +44,7 @@
                             </div>
 
                             <div class="account-details">
+
                                 <div class="account-detail">
                                     <span class="account-detail-label">
                                         Nombre
@@ -62,6 +64,7 @@
                                         {{ $user->email }}
                                     </span>
                                 </div>
+
                             </div>
 
                             <div class="account-actions">
@@ -76,6 +79,8 @@
                         </div>
                     </div>
 
+
+                    {{-- Pedidos --}}
                     <div class="col-12 col-lg-7">
                         <div class="account-panel h-100">
 
@@ -104,7 +109,8 @@
                                 </h3>
 
                                 <p class="account-orders-text mb-0">
-                                    Cuando realices una compra, podrás consultar aquí el estado y los detalles de tus pedidos.
+                                    Cuando realices una compra, podrás consultar aquí
+                                    el estado y los detalles de tus pedidos.
                                 </p>
 
                             </div>

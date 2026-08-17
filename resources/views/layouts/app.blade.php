@@ -89,55 +89,245 @@
 
                     <div class="collapse navbar-collapse" id="mainNavbar">
 
-                        {{-- Categorías principales --}}
+                        {{-- Navegación principal --}}
                         <ul class="navbar-nav jem-main-nav mx-auto">
 
+                            {{-- Novedades --}}
                             <li class="nav-item">
-                                <span class="nav-link jem-nav-link">
+                                <a href="{{ route('products.index', ['new' => 1]) }}" class="nav-link jem-nav-link">
                                     Novedades
-                                </span>
+                                </a>
                             </li>
 
-                            <li class="nav-item">
-                                <span class="nav-link jem-nav-link">
+
+                            {{-- Hombre --}}
+                            <li class="nav-item dropdown jem-mega-item">
+
+                                <a href="#" class="nav-link jem-nav-link dropdown-toggle"
+                                    data-bs-toggle="dropdown" data-bs-display="static" data-bs-auto-close="outside"
+                                    aria-expanded="false">
                                     Hombre
-                                </span>
+                                </a>
+
+                                <div class="dropdown-menu jem-mega-menu">
+                                    <div class="container-fluid px-4 px-lg-5">
+
+                                        <div class="jem-mega-header">
+                                            <div>
+                                                <span class="jem-mega-kicker">
+                                                    JEM Hombre
+                                                </span>
+
+                                                <h2 class="jem-mega-title jem-editorial-title">
+                                                    Hombre
+                                                </h2>
+                                            </div>
+
+                                            <a href="{{ route('products.index', ['audience' => 'hombre']) }}"
+                                                class="jem-mega-view-all">
+                                                Ver todo Hombre
+                                            </a>
+                                        </div>
+
+                                        <div class="row g-4">
+
+                                            @foreach ($menMenuCategories as $group)
+                                                @if ($group->children->isNotEmpty())
+                                                    <div class="col-12 col-md-4">
+
+                                                        <a href="{{ route('products.index', [
+                                                            'audience' => 'hombre',
+                                                            'group' => $group->slug,
+                                                        ]) }}"
+                                                            class="jem-mega-group">
+                                                            {{ $group->name }}
+                                                        </a>
+
+                                                        <ul class="jem-mega-list">
+
+                                                            @foreach ($group->children as $category)
+                                                                <li>
+                                                                    <a
+                                                                        href="{{ route('products.index', [
+                                                                            'audience' => 'hombre',
+                                                                            'category' => $category->slug,
+                                                                        ]) }}">
+                                                                        {{ $category->name }}
+                                                                    </a>
+                                                                </li>
+                                                            @endforeach
+
+                                                        </ul>
+
+                                                    </div>
+                                                @endif
+                                            @endforeach
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
                             </li>
 
-                            <li class="nav-item">
-                                <span class="nav-link jem-nav-link">
+
+                            {{-- Mujer --}}
+                            <li class="nav-item dropdown jem-mega-item">
+
+                                <a href="#" class="nav-link jem-nav-link dropdown-toggle"
+                                    data-bs-toggle="dropdown" data-bs-display="static" data-bs-auto-close="outside"
+                                    aria-expanded="false">
                                     Mujer
-                                </span>
+                                </a>
+
+                                <div class="dropdown-menu jem-mega-menu">
+                                    <div class="container-fluid px-4 px-lg-5">
+
+                                        <div class="jem-mega-header">
+                                            <div>
+                                                <span class="jem-mega-kicker">
+                                                    JEM Mujer
+                                                </span>
+
+                                                <h2 class="jem-mega-title jem-editorial-title">
+                                                    Mujer
+                                                </h2>
+                                            </div>
+
+                                            <a href="{{ route('products.index', ['audience' => 'mujer']) }}"
+                                                class="jem-mega-view-all">
+                                                Ver todo Mujer
+                                            </a>
+                                        </div>
+
+                                        <div class="row g-4">
+
+                                            @foreach ($womenMenuCategories as $group)
+                                                @if ($group->children->isNotEmpty())
+                                                    <div class="col-12 col-md-4">
+
+                                                        <a href="{{ route('products.index', [
+                                                            'audience' => 'mujer',
+                                                            'group' => $group->slug,
+                                                        ]) }}"
+                                                            class="jem-mega-group">
+                                                            {{ $group->name }}
+                                                        </a>
+
+                                                        <ul class="jem-mega-list">
+
+                                                            @foreach ($group->children as $category)
+                                                                <li>
+                                                                    <a
+                                                                        href="{{ route('products.index', [
+                                                                            'audience' => 'mujer',
+                                                                            'category' => $category->slug,
+                                                                        ]) }}">
+                                                                        {{ $category->name }}
+                                                                    </a>
+                                                                </li>
+                                                            @endforeach
+
+                                                        </ul>
+
+                                                    </div>
+                                                @endif
+                                            @endforeach
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
                             </li>
 
-                            <li class="nav-item">
-                                <span class="nav-link jem-nav-link">
+
+                            {{-- Calzado y accesorios --}}
+                            <li class="nav-item dropdown jem-mega-item">
+
+                                <a href="#" class="nav-link jem-nav-link dropdown-toggle"
+                                    data-bs-toggle="dropdown" data-bs-display="static" data-bs-auto-close="outside"
+                                    aria-expanded="false">
                                     Calzado y accesorios
-                                </span>
+                                </a>
+
+                                <div class="dropdown-menu jem-mega-menu">
+                                    <div class="container-fluid px-4 px-lg-5">
+
+                                        <div class="jem-mega-header">
+                                            <div>
+                                                <span class="jem-mega-kicker">
+                                                    Complementa tu estilo
+                                                </span>
+
+                                                <h2 class="jem-mega-title jem-editorial-title">
+                                                    Calzado y accesorios
+                                                </h2>
+                                            </div>
+                                        </div>
+
+                                        <div class="row g-4">
+
+                                            @foreach ($shopMenuCategories as $group)
+                                                <div class="col-12 col-md-6">
+
+                                                    <a href="{{ route('products.index', [
+                                                        'group' => $group->slug,
+                                                    ]) }}"
+                                                        class="jem-mega-group">
+                                                        {{ $group->name }}
+                                                    </a>
+
+                                                    <ul class="jem-mega-list">
+
+                                                        @foreach ($group->children as $category)
+                                                            <li>
+                                                                <a
+                                                                    href="{{ route('products.index', [
+                                                                        'category' => $category->slug,
+                                                                    ]) }}">
+                                                                    {{ $category->name }}
+                                                                </a>
+                                                            </li>
+                                                        @endforeach
+
+                                                    </ul>
+
+                                                </div>
+                                            @endforeach
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
                             </li>
 
+
+                            {{-- Ofertas --}}
                             <li class="nav-item">
-                                <span class="nav-link jem-nav-link jem-sale-link">
+                                <a href="{{ route('products.index', ['sale' => 1]) }}"
+                                    class="nav-link jem-nav-link jem-sale-link">
                                     Ofertas
-                                </span>
+                                </a>
                             </li>
 
                         </ul>
-
 
                         {{-- Acciones --}}
                         <ul class="navbar-nav jem-utility-nav align-items-lg-center">
 
                             {{-- Buscar --}}
                             <li class="nav-item">
-                                <span class="nav-link jem-icon-link" title="Buscar" aria-label="Buscar">
+                                <a href="{{ route('products.index') }}#search" class="nav-link jem-icon-link"
+                                    title="Buscar" aria-label="Buscar">
                                     <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
                                         stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
                                         stroke-linejoin="round" aria-hidden="true">
                                         <circle cx="11" cy="11" r="7"></circle>
                                         <path d="M20 20L16.5 16.5"></path>
                                     </svg>
-                                </span>
+                                </a>
                             </li>
 
 
@@ -170,7 +360,8 @@
                                     </a>
 
 
-                                    <ul class="dropdown-menu dropdown-menu-end jem-dropdown" aria-labelledby="userDropdown">
+                                    <ul class="dropdown-menu dropdown-menu-end jem-dropdown"
+                                        aria-labelledby="userDropdown">
 
                                         <li class="jem-dropdown-user">
                                             {{ Auth::user()->name }}

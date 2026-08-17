@@ -18,11 +18,96 @@
                 </p>
             </div>
 
+            <div class="catalog-filters">
+
+                <form method="GET" action="{{ route('products.index') }}" class="catalog-filter-form">
+
+                    <div class="catalog-search">
+                        <label for="search" class="catalog-filter-label">
+                            Buscar
+                        </label>
+
+                        <input id="search" type="search" name="search" class="form-control catalog-filter-control"
+                            placeholder="Buscar productos..." value="{{ request('search') }}">
+                    </div>
+
+
+                    <div>
+                        <label for="audience" class="catalog-filter-label">
+                            Público
+                        </label>
+
+                        <select id="audience" name="audience" class="form-select catalog-filter-control">
+                            <option value="">Todos</option>
+
+                            <option value="hombre" @selected(request('audience') === 'hombre')>
+                                Hombre
+                            </option>
+
+                            <option value="mujer" @selected(request('audience') === 'mujer')>
+                                Mujer
+                            </option>
+
+                            <option value="unisex" @selected(request('audience') === 'unisex')>
+                                Unisex
+                            </option>
+                        </select>
+                    </div>
+
+
+                    <div>
+                        <label for="category" class="catalog-filter-label">
+                            Categoría
+                        </label>
+
+                        <select id="category" name="category" class="form-select catalog-filter-control">
+                            <option value="">Todas</option>
+
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->slug }}" @selected(request('category') === $category->slug)>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+
+                    <div class="catalog-filter-actions">
+
+                        <button type="submit" class="btn btn-dark catalog-filter-button">
+                            Aplicar filtros
+                        </button>
+
+                        <a href="{{ route('products.index') }}" class="catalog-clear-link">
+                            Limpiar
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
             <div class="catalog-toolbar">
+
                 <p class="catalog-count mb-0">
                     {{ $products->total() }}
                     {{ $products->total() === 1 ? 'producto' : 'productos' }}
                 </p>
+
+                <div class="catalog-quick-filters">
+
+                    <a href="{{ route('products.index', ['new' => 1]) }}" class="catalog-quick-link">
+                        Novedades
+                    </a>
+
+                    <a href="{{ route('products.index', ['sale' => 1]) }}" class="catalog-quick-link catalog-sale-link">
+                        Ofertas
+                    </a>
+
+                </div>
+
             </div>
 
             <div class="row g-3 g-lg-4">
@@ -32,7 +117,7 @@
 
                         <article class="product-card">
 
-                            <a href="#" class="product-card-image">
+                            <a href="{{ route('products.show', $product) }}" class="product-card-image">
                                 @if ($product->image)
                                     <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
                                 @else
