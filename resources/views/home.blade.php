@@ -1,14 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<main>
     <section class="py-5">
         <div class="container py-5 text-center">
             <p class="text-uppercase fw-semibold mb-2">
                 Nueva colección
             </p>
 
-            <h1 class="display-2 fw-bold mb-3">
+            <h1 class="display-2 jem-editorial-title mb-3">
                 JEM Store
             </h1>
 
@@ -25,7 +24,10 @@
     <section id="coleccion" class="py-5 bg-light">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="fw-bold">Descubre JEM</h2>
+                <h2 class="jem-editorial-title">
+                    Descubre JEM
+                </h2>
+
                 <p class="text-secondary mb-0">
                     Nuestra colección de ropa y accesorios estará disponible próximamente.
                 </p>
@@ -34,7 +36,10 @@
             <div class="row g-4">
                 <div class="col-12 col-md-4">
                     <div class="bg-white p-5 text-center h-100 border">
-                        <h3 class="h4">Hombre</h3>
+                        <h3 class="h4">
+                            Hombre
+                        </h3>
+
                         <p class="text-secondary mb-0">
                             Prendas esenciales para todos los días.
                         </p>
@@ -43,7 +48,10 @@
 
                 <div class="col-12 col-md-4">
                     <div class="bg-white p-5 text-center h-100 border">
-                        <h3 class="h4">Mujer</h3>
+                        <h3 class="h4">
+                            Mujer
+                        </h3>
+
                         <p class="text-secondary mb-0">
                             Diseños modernos con un estilo limpio.
                         </p>
@@ -52,7 +60,10 @@
 
                 <div class="col-12 col-md-4">
                     <div class="bg-white p-5 text-center h-100 border">
-                        <h3 class="h4">Accesorios</h3>
+                        <h3 class="h4">
+                            Accesorios
+                        </h3>
+
                         <p class="text-secondary mb-0">
                             Detalles para completar cada estilo.
                         </p>
@@ -61,5 +72,4 @@
             </div>
         </div>
     </section>
-</main>
 @endsection

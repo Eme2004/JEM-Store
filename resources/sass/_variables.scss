@@ -1,7 +1,32 @@
-// Body
-$body-bg: #f8fafc;
+// --------------------------------------------------
+// JEM Store - Paleta de colores
+// --------------------------------------------------
 
-// Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
+$jem-obsidian: #161616;
+$jem-white: #ffffff;
+
+$jem-porcelain: #fbfaf7;
+$jem-stone: #eeeae4;
+$jem-ash: #706e6a;
+
+$jem-ink: #202b46;
+$jem-merlot: #773846;
+$jem-sky: #c4d8f0;
+
+
+// --------------------------------------------------
+// Bootstrap
+// --------------------------------------------------
+
+$body-bg: $jem-porcelain;
+$body-color: $jem-obsidian;
+
+$primary: $jem-ink;
+$secondary: $jem-ash;
+$dark: $jem-obsidian;
+
+$border-color: $jem-stone;
+
+$font-family-sans-serif: 'Manrope', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;

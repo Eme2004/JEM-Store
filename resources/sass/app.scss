@@ -1,8 +1,619 @@
 // Fonts
-@import url('https://fonts.bunny.net/css?family=Nunito');
+@import url('https://fonts.bunny.net/css?family=Manrope:400,500,600,700&family=Cormorant+Garamond:500,600,700');
 
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+
+// --------------------------------------------------
+// JEM Store - Base
+// --------------------------------------------------
+
+body {
+    background-color: $jem-porcelain;
+    color: $jem-obsidian;
+}
+
+
+// --------------------------------------------------
+// Tipografía JEM
+// --------------------------------------------------
+
+.jem-editorial-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+body {
+    font-family: 'Manrope', sans-serif;
+}
+
+
+// --------------------------------------------------
+// Navegación
+// --------------------------------------------------
+
+.navbar {
+    background-color: $jem-white !important;
+}
+
+.navbar-brand {
+    color: $jem-obsidian;
+    letter-spacing: 0.08rem;
+}
+
+.navbar-brand:hover {
+    color: $jem-obsidian;
+}
+
+.nav-link {
+    color: $jem-obsidian;
+}
+
+.nav-link:hover {
+    color: $jem-merlot;
+}
+
+
+// --------------------------------------------------
+// Utilidades JEM
+// --------------------------------------------------
+
+.bg-jem-sky {
+    background-color: $jem-sky;
+}
+
+.bg-jem-porcelain {
+    background-color: $jem-porcelain;
+}
+
+.bg-jem-stone {
+    background-color: $jem-stone;
+}
+
+.text-jem-ink {
+    color: $jem-ink;
+}
+
+.text-jem-merlot {
+    color: $jem-merlot;
+}
+
+
+// --------------------------------------------------
+// Autenticación
+// --------------------------------------------------
+
+.auth-page {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    padding: 4rem 0;
+    background-color: $jem-porcelain;
+}
+
+.auth-card {
+    position: relative;
+    width: 100%;
+    padding: 3rem;
+    border: 1px solid $jem-stone;
+    background-color: $jem-white;
+}
+
+// Firma pastel de JEM
+.auth-card::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: calc(100% + 2px);
+    height: 4px;
+    background-color: $jem-sky;
+}
+
+.auth-brand {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.25rem;
+    text-transform: uppercase;
+    color: $jem-merlot;
+}
+
+.auth-title {
+    margin-bottom: 0.75rem;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: $jem-obsidian;
+}
+
+.auth-subtitle {
+    color: $jem-ash;
+    font-size: 0.95rem;
+}
+
+.auth-label {
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $jem-obsidian;
+}
+
+.auth-input {
+    min-height: 50px;
+    padding: 0.75rem 1rem;
+    border: 1px solid $jem-stone;
+    border-radius: 0;
+    background-color: $jem-white;
+    color: $jem-obsidian;
+}
+
+.auth-input:focus {
+    border-color: $jem-ink;
+    box-shadow: 0 0 0 1px $jem-ink;
+}
+
+.auth-small-text {
+    font-size: 0.85rem;
+}
+
+.auth-link {
+    color: $jem-ink;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-link:hover {
+    color: $jem-merlot;
+    text-decoration: underline;
+}
+
+.auth-button {
+    min-height: 50px;
+    border-radius: 0;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05rem;
+    text-transform: uppercase;
+}
+
+.auth-footer {
+    margin-top: 2rem;
+    color: $jem-ash;
+    font-size: 0.9rem;
+}
+
+
+// --------------------------------------------------
+// Responsive
+// --------------------------------------------------
+
+@media (max-width: 767.98px) {
+    .auth-page {
+        min-height: auto;
+        padding: 2.5rem 0;
+    }
+
+    .auth-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .auth-title {
+        font-size: 1.75rem;
+    }
+}
+
+// --------------------------------------------------
+// Mi cuenta
+// --------------------------------------------------
+
+.account-page {
+    min-height: 80vh;
+    padding: 5rem 0;
+    background-color: $jem-porcelain;
+}
+
+.account-header {
+    max-width: 650px;
+    margin-bottom: 3rem;
+}
+
+.account-kicker {
+    color: $jem-ink;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18rem;
+    text-transform: uppercase;
+}
+
+.account-title {
+    color: $jem-obsidian;
+    font-size: 2.75rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+}
+
+.account-subtitle {
+    color: $jem-ash;
+    font-size: 1rem;
+}
+
+.account-panel {
+    position: relative;
+    padding: 2.5rem;
+    border: 1px solid $jem-stone;
+    background-color: $jem-white;
+}
+
+.account-panel-profile::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: calc(100% + 2px);
+    height: 5px;
+    background-color: $jem-sky;
+}
+
+.account-section-label {
+    color: $jem-merlot;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12rem;
+    text-transform: uppercase;
+}
+
+.account-section-title {
+    color: $jem-obsidian;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.account-details {
+    margin-top: 3rem;
+}
+
+.account-detail {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid $jem-stone;
+}
+
+.account-detail:first-child {
+    padding-top: 0;
+}
+
+.account-detail-label {
+    display: block;
+    margin-bottom: 0.35rem;
+    color: $jem-ash;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05rem;
+    text-transform: uppercase;
+}
+
+.account-detail-value {
+    display: block;
+    color: $jem-obsidian;
+    font-size: 1rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.account-actions {
+    margin-top: 2rem;
+}
+
+.account-button {
+    min-height: 46px;
+    padding: 0.7rem 1.5rem;
+    border-radius: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04rem;
+    text-transform: uppercase;
+}
+
+.account-panel-heading {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid $jem-stone;
+}
+
+.account-orders-empty {
+    padding: 3.5rem 0 1rem;
+}
+
+.account-orders-number {
+    display: block;
+    margin-bottom: 1rem;
+    color: $jem-sky;
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.05em;
+}
+
+.account-orders-title {
+    margin-bottom: 0.75rem;
+    color: $jem-obsidian;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.account-orders-text {
+    max-width: 500px;
+    color: $jem-ash;
+}
+
+.jem-alert {
+    padding: 1rem 1.25rem;
+    border-left: 4px solid $jem-ink;
+    background-color: $jem-sky;
+    color: $jem-obsidian;
+    font-weight: 600;
+}
+
+
+// --------------------------------------------------
+// Mi cuenta - Responsive
+// --------------------------------------------------
+
+@media (max-width: 767.98px) {
+    .account-page {
+        padding: 3rem 0;
+    }
+
+    .account-header {
+        margin-bottom: 2rem;
+    }
+
+    .account-title {
+        font-size: 2.1rem;
+    }
+
+    .account-panel {
+        padding: 2rem 1.5rem;
+    }
+
+    .account-details {
+        margin-top: 2rem;
+    }
+
+    .account-orders-empty {
+        padding-top: 2.5rem;
+    }
+
+    .account-orders-number {
+        font-size: 3rem;
+    }
+}
+
+// --------------------------------------------------
+// Navbar JEM
+// --------------------------------------------------
+
+.jem-navbar {
+    min-height: 78px;
+    padding: 0;
+    border-bottom: 1px solid $jem-stone;
+    background-color: $jem-white !important;
+}
+
+.jem-logo {
+    margin-right: 2rem;
+    color: $jem-obsidian;
+    font-size: 1.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12rem;
+    line-height: 1;
+}
+
+.jem-logo:hover {
+    color: $jem-ink;
+}
+
+.jem-main-nav {
+    gap: 0.35rem;
+}
+
+.jem-nav-link {
+    position: relative;
+    padding: 1.8rem 0.85rem !important;
+    color: $jem-obsidian !important;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: default;
+}
+
+.jem-nav-link::after {
+    content: '';
+    position: absolute;
+    right: 0.85rem;
+    bottom: 1.35rem;
+    left: 0.85rem;
+    height: 2px;
+    background-color: $jem-sky;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.2s ease;
+}
+
+.jem-nav-link:hover::after {
+    transform: scaleX(1);
+}
+
+.jem-sale-link {
+    color: $jem-merlot !important;
+}
+
+.jem-utility-nav {
+    gap: 0.4rem;
+}
+
+.jem-icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0 !important;
+    color: $jem-obsidian !important;
+    cursor: pointer;
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.jem-icon-link:hover {
+    color: $jem-ink !important;
+    background-color: $jem-sky;
+}
+
+.jem-dropdown {
+    min-width: 210px;
+    padding: 0.75rem 0;
+    border: 1px solid $jem-stone;
+    border-radius: 0;
+    background-color: $jem-white;
+    box-shadow: 0 12px 30px rgba(22, 22, 22, 0.08);
+}
+
+.jem-dropdown-user {
+    padding: 0.6rem 1rem 0.8rem;
+    color: $jem-ash;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06rem;
+    text-transform: uppercase;
+}
+
+.jem-dropdown .dropdown-item {
+    padding: 0.7rem 1rem;
+    color: $jem-obsidian;
+    font-size: 0.85rem;
+}
+
+.jem-dropdown .dropdown-item:hover {
+    background-color: $jem-sky;
+    color: $jem-obsidian;
+}
+
+.jem-dropdown .dropdown-divider {
+    border-color: $jem-stone;
+}
+
+.jem-toggler {
+    border-color: $jem-stone;
+    border-radius: 0;
+}
+
+.jem-toggler:focus {
+    box-shadow: none;
+}
+
+// --------------------------------------------------
+// Barra de anuncios JEM
+// --------------------------------------------------
+
+.jem-announcement-bar {
+    background-color: $jem-obsidian;
+    color: $jem-white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.jem-announcement-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    min-height: 42px;
+    padding: 0.65rem 1rem;
+    text-align: center;
+    transition:
+        opacity 0.18s ease,
+        transform 0.18s ease;
+}
+
+.jem-announcement-bar.is-changing .jem-announcement-content {
+    opacity: 0;
+    transform: translateY(-4px);
+}
+
+.jem-announcement-text {
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.jem-announcement-link {
+    color: $jem-white;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.16rem;
+}
+
+.jem-announcement-link:hover {
+    color: $jem-sky;
+}
+
+
+// --------------------------------------------------
+// Barra de anuncios JEM - Responsive
+// --------------------------------------------------
+
+@media (max-width: 767.98px) {
+    .jem-announcement-content {
+        gap: 0.55rem;
+        padding: 0.7rem 0.9rem;
+    }
+
+    .jem-announcement-text,
+    .jem-announcement-link {
+        font-size: 0.82rem;
+    }
+}
+
+// --------------------------------------------------
+// Navbar JEM - Responsive
+// --------------------------------------------------
+
+@media (max-width: 991.98px) {
+    .jem-navbar {
+        min-height: 68px;
+        padding: 0.8rem 0;
+    }
+
+    .jem-main-nav {
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid $jem-stone;
+    }
+
+    .jem-nav-link {
+        padding: 0.85rem 0 !important;
+        font-size: 0.9rem;
+    }
+
+    .jem-nav-link::after {
+        display: none;
+    }
+
+    .jem-utility-nav {
+        flex-direction: row;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid $jem-stone;
+    }
+
+    .jem-icon-link {
+        width: 44px;
+        height: 44px;
+        background-color: $jem-porcelain;
+    }
+}
