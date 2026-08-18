@@ -11,6 +11,11 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
+        $request->validate([
+            'min_price' => ['nullable', 'numeric', 'min:0'],
+            'max_price' => ['nullable', 'numeric', 'min:0'],
+        ]);
+
         $products = Product::with('category')
             ->where('active', true);
 
@@ -61,6 +66,38 @@ class ProductController extends Controller
         // Productos en oferta
         if ($request->boolean('sale')) {
             $products->whereNotNull('sale_price');
+        }
+
+        // Precio mínimo
+        if ($request->filled('min_price')) {
+            $minPrice = (float) $request->input('min_price');
+
+            $products->where(function ($query) use ($minPrice) {
+                $query->where(function ($query) use ($minPrice) {
+                    $query->whereNotNull('sale_price')
+                        ->where('sale_price', '>=', $minPrice);
+                })
+                    ->orWhere(function ($query) use ($minPrice) {
+                        $query->whereNull('sale_price')
+                            ->where('price', '>=', $minPrice);
+                    });
+            });
+        }
+
+        // Precio máximo
+        if ($request->filled('max_price')) {
+            $maxPrice = (float) $request->input('max_price');
+
+            $products->where(function ($query) use ($maxPrice) {
+                $query->where(function ($query) use ($maxPrice) {
+                    $query->whereNotNull('sale_price')
+                        ->where('sale_price', '<=', $maxPrice);
+                })
+                    ->orWhere(function ($query) use ($maxPrice) {
+                        $query->whereNull('sale_price')
+                            ->where('price', '<=', $maxPrice);
+                    });
+            });
         }
 
         // Novedades

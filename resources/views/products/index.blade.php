@@ -31,7 +31,6 @@
                             placeholder="Buscar productos..." value="{{ request('search') }}">
                     </div>
 
-
                     <div>
                         <label for="audience" class="catalog-filter-label">
                             Público
@@ -54,7 +53,6 @@
                         </select>
                     </div>
 
-
                     <div>
                         <label for="category" class="catalog-filter-label">
                             Categoría
@@ -71,6 +69,23 @@
                         </select>
                     </div>
 
+                    <div>
+                        <label for="min_price" class="catalog-filter-label">
+                            Precio mín.
+                        </label>
+
+                        <input id="min_price" type="number" name="min_price" class="form-control catalog-filter-control"
+                            min="0" step="1" placeholder="₡0" value="{{ request('min_price') }}">
+                    </div>
+
+                    <div>
+                        <label for="max_price" class="catalog-filter-label">
+                            Precio máx.
+                        </label>
+
+                        <input id="max_price" type="number" name="max_price" class="form-control catalog-filter-control"
+                            min="0" step="1" placeholder="₡100000" value="{{ request('max_price') }}">
+                    </div>
 
                     <div class="catalog-filter-actions">
 
@@ -85,7 +100,6 @@
                     </div>
 
                 </form>
-
             </div>
 
 

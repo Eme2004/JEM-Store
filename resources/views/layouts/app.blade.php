@@ -431,34 +431,73 @@
 
 
         {{-- ==================================================
-            FOOTER
-        ================================================== --}}
+    JEM MEMBERS
+================================================== --}}
+        <section class="jem-join">
+            <div class="container text-center">
+
+                <span class="jem-join__brand">
+                    JEM / MEMBERS
+                </span>
+
+                <h2 class="jem-editorial-title">
+                    Join JEM. Get 10% off.
+                </h2>
+
+                <p>
+                    Crea tu cuenta y recibe un 10% de descuento en tu primera compra.
+                    Descubre nuevas colecciones, piezas seleccionadas y novedades JEM.
+                </p>
+
+                @guest
+                    <a href="{{ route('register') }}" class="jem-join__button">
+                        Unirme a JEM
+                    </a>
+                @else
+                    <a href="{{ route('products.index') }}" class="jem-join__button">
+                        Explorar colección
+                    </a>
+                @endguest
+
+                <span class="jem-join__note">
+                    * Beneficio de bienvenida aplicable a la primera compra.
+                    Sujeto a condiciones.
+                </span>
+
+            </div>
+        </section>
+
+
+        {{-- ==================================================
+    FOOTER JEM
+================================================== --}}
         <footer class="jem-footer">
             <div class="container-fluid px-4 px-lg-5">
 
                 <div class="row gy-5">
 
                     {{-- Marca --}}
-                    <div class="col-12 col-lg-5">
+                    <div class="col-12 col-lg-4">
 
                         <a href="{{ route('home') }}" class="jem-footer-logo">
                             JEM
                         </a>
 
                         <p class="jem-footer-description">
-                            Moda contemporánea diseñada para expresar un estilo
-                            auténtico, elegante y versátil.
+                            Ropa y accesorios contemporáneos creados alrededor
+                            de siluetas limpias, materiales seleccionados
+                            y una identidad propia.
                         </p>
 
                         <span class="jem-footer-signature">
-                            Designed for your identity.
+                            Define your presence.
                         </span>
 
                     </div>
 
 
                     {{-- Tienda --}}
-                    <div class="col-6 col-md-4 col-lg-2">
+                    <div class="col-6 col-md-3 col-lg-2">
 
                         <h2 class="jem-footer-title">
                             Tienda
@@ -478,13 +517,37 @@
                                 </a>
                             </li>
 
+                            <li>
+                                <a href="{{ route('products.index', ['new' => 1]) }}">
+                                    Novedades
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('products.index', ['audience' => 'hombre']) }}">
+                                    Hombre
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('products.index', ['audience' => 'mujer']) }}">
+                                    Mujer
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('products.index', ['sale' => 1]) }}">
+                                    Ofertas
+                                </a>
+                            </li>
+
                         </ul>
 
                     </div>
 
 
                     {{-- Cuenta --}}
-                    <div class="col-6 col-md-4 col-lg-2">
+                    <div class="col-6 col-md-3 col-lg-2">
 
                         <h2 class="jem-footer-title">
                             Cuenta
@@ -493,7 +556,6 @@
                         <ul class="jem-footer-list">
 
                             @guest
-
                                 <li>
                                     <a href="{{ route('login') }}">
                                         Iniciar sesión
@@ -517,25 +579,90 @@
                                         Editar perfil
                                     </a>
                                 </li>
-
                             @endguest
 
                         </ul>
-
                     </div>
 
+                    {{-- Métodos de pago --}}
+                    <div class="jem-footer-payment-section">
+                        <span class="jem-footer-payment-title">
+                            Métodos de pago
+                        </span>
 
-                    {{-- Sobre JEM --}}
-                    <div class="col-12 col-md-4 col-lg-3">
+                        <div class="jem-footer-payment-list">
+
+                            <div class="jem-payment-method jem-payment-visa">
+                                VISA
+                            </div>
+
+                            <div class="jem-payment-method">
+                                <span class="jem-mastercard-circles">
+                                    <span></span>
+                                    <span></span>
+                                </span>
+
+                                <span>Mastercard</span>
+                            </div>
+
+                            <div class="jem-payment-method">
+                                SINPE Móvil
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {{-- Contacto --}}
+                    <div class="col-12 col-md-6 col-lg-4">
 
                         <h2 class="jem-footer-title">
-                            JEM Store
+                            Contacto
                         </h2>
 
-                        <p class="jem-footer-text">
-                            Una experiencia de moda creada alrededor de la
-                            simplicidad, el detalle y una identidad propia.
-                        </p>
+                        <address class="jem-footer-contact">
+
+                            <div class="jem-footer-contact__item">
+                                <span class="jem-footer-contact__label">
+                                    Ubicación
+                                </span>
+
+                                <span>
+                                    San José, Costa Rica
+                                </span>
+                            </div>
+
+                            <div class="jem-footer-contact__item">
+                                <span class="jem-footer-contact__label">
+                                    Teléfono
+                                </span>
+
+                                <a href="tel:+50600000000">
+                                    +506 6019-0694
+                                </a>
+                            </div>
+
+                            <div class="jem-footer-contact__item">
+                                <span class="jem-footer-contact__label">
+                                    Correo
+                                </span>
+
+                                <a href="mailto:contacto@jemstore.com">
+                                    contacto@jemstore.com
+                                </a>
+                            </div>
+
+                            <div class="jem-footer-contact__item">
+                                <span class="jem-footer-contact__label">
+                                    Atención
+                                </span>
+
+                                <span>
+                                    Lunes – sábado<br>
+                                    9:00 a.m. – 6:00 p.m.
+                                </span>
+                            </div>
+
+                        </address>
 
                     </div>
 
@@ -545,19 +672,30 @@
                 {{-- Parte inferior --}}
                 <div class="jem-footer-bottom">
 
-                    <p class="mb-0">
-                        © {{ now()->year }} JEM Store
-                    </p>
+                    <div>
+                        <p class="mb-1">
+                            © {{ now()->year }} JEM Store
+                        </p>
 
-                    <p class="mb-0">
-                        Todos los derechos reservados.
-                    </p>
+                        <p class="mb-0">
+                            San José, Costa Rica
+                        </p>
+                    </div>
+
+                    <div class="jem-footer-bottom__right">
+                        <span>
+                            Todos los derechos reservados.
+                        </span>
+
+                        <span>
+                            JEM / Contemporary clothing & accessories
+                        </span>
+                    </div>
 
                 </div>
 
             </div>
         </footer>
-
     </div>
 </body>
 

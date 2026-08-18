@@ -857,6 +857,73 @@ body {
     margin-top: 4rem;
 }
 
+.catalog-pagination nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.catalog-pagination .pagination {
+    justify-content: center;
+    gap: 0.4rem;
+    margin-bottom: 0;
+}
+
+.catalog-pagination .page-item {
+    margin: 0;
+}
+
+.catalog-pagination .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+    height: 42px;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid $jem-stone;
+    border-radius: 0;
+    background-color: $jem-white;
+    color: $jem-obsidian;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: none;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.catalog-pagination .page-link:hover {
+    border-color: $jem-ink;
+    background-color: $jem-sky;
+    color: $jem-obsidian;
+}
+
+.catalog-pagination .page-link:focus {
+    box-shadow: none;
+}
+
+.catalog-pagination .page-item.active .page-link {
+    border-color: $jem-obsidian;
+    background-color: $jem-obsidian;
+    color: $jem-white;
+}
+
+.catalog-pagination .page-item.disabled .page-link {
+    border-color: $jem-stone;
+    background-color: $jem-porcelain;
+    color: $jem-ash;
+    opacity: 0.55;
+}
+
+.catalog-pagination p {
+    margin-bottom: 0;
+    color: $jem-ash;
+    font-size: 0.75rem;
+}
+
 
 // --------------------------------------------------
 // Catálogo - Responsive
@@ -894,7 +961,8 @@ body {
 
 .catalog-filter-form {
     display: grid;
-    grid-template-columns: minmax(220px, 1.5fr) 1fr 1fr auto;
+    grid-template-columns:
+        minmax(220px, 1.5fr) minmax(140px, 1fr) minmax(140px, 1fr) minmax(130px, 0.8fr) minmax(130px, 0.8fr) auto;
     align-items: end;
     gap: 1rem;
 }
@@ -975,6 +1043,23 @@ body {
     color: $jem-merlot;
 }
 
+@media (max-width: 1199.98px) {
+    .catalog-filter-form {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .catalog-filter-form {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .catalog-filter-form {
+        grid-template-columns: 1fr;
+    }
+}
 
 // --------------------------------------------------
 // Filtros - Responsive
@@ -1371,13 +1456,535 @@ body {
     }
 }
 
+// --------------------------------------------------
+// Home JEM
+// --------------------------------------------------
+
+.jem-home-hero {
+    overflow: hidden;
+    background-color: $jem-porcelain;
+}
+
+.jem-home-hero__row {
+    min-height: 680px;
+    padding: 5rem 0;
+}
+
+.jem-home-kicker {
+    color: $jem-merlot;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.16rem;
+    text-transform: uppercase;
+}
+
+.jem-home-hero__title {
+    max-width: 720px;
+    margin-bottom: 1.5rem;
+    color: $jem-obsidian;
+    font-size: clamp(4rem, 8vw, 7.5rem);
+    line-height: 0.85;
+}
+
+.jem-home-hero__description {
+    max-width: 560px;
+    margin-bottom: 2rem;
+    color: $jem-ash;
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+.jem-home-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.jem-home-button {
+    min-height: 48px;
+    padding: 0.8rem 1.6rem;
+    border-radius: 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05rem;
+    text-transform: uppercase;
+}
+
+.jem-home-hero__visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 500px;
+    overflow: hidden;
+    background-color: $jem-sky;
+}
+
+
+.jem-home-hero__visual::after {
+    content: '';
+    position: absolute;
+    bottom: 12%;
+    left: 10%;
+    width: 80px;
+    height: 1px;
+    background-color: $jem-obsidian;
+}
+
+.jem-home-hero__visual-label {
+    color: $jem-obsidian;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(6rem, 12vw, 10rem);
+    font-weight: 600;
+    letter-spacing: -0.08em;
+    line-height: 1;
+}
+
+.jem-home-hero__visual-copy {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    color: $jem-obsidian;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1rem;
+    line-height: 1.8;
+    text-transform: uppercase;
+}
+
+
+// --------------------------------------------------
+// Secciones Home
+// --------------------------------------------------
+
+.jem-home-section {
+    padding: 7rem 0;
+    background-color: $jem-porcelain;
+}
+
+.jem-home-section--stone {
+    background-color: $jem-stone;
+}
+
+.jem-home-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.jem-home-section-title {
+    color: $jem-obsidian;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1;
+}
+
+.jem-home-link {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.25rem;
+    color: $jem-obsidian;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.jem-home-link::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background-color: $jem-obsidian;
+    transition: transform 0.2s ease;
+    transform-origin: left;
+}
+
+.jem-home-link:hover {
+    color: $jem-merlot;
+}
+
+.jem-home-link:hover::after {
+    transform: scaleX(0.65);
+}
+
+
+// --------------------------------------------------
+// Colecciones editoriales Home
+// --------------------------------------------------
+
+.jem-home-collection-card {
+    display: block;
+    height: 100%;
+    color: $jem-obsidian;
+    text-decoration: none;
+}
+
+.jem-home-collection-card:hover {
+    color: $jem-obsidian;
+}
+
+.jem-home-collection-card__visual {
+    position: relative;
+    min-height: 520px;
+    overflow: hidden;
+    padding: 0;
+    background-color: $jem-stone;
+}
+
+.jem-home-collection-card__visual img {
+    width: 100%;
+    height: 100%;
+    min-height: 520px;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.5s ease;
+}
+
+.jem-home-collection-card:hover .jem-home-collection-card__visual img {
+    transform: scale(1.025);
+}
+
+.jem-home-collection-card__number {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 1.25rem;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+    height: 32px;
+    padding: 0 0.75rem;
+    background-color: rgba(251, 250, 247, 0.92);
+    color: $jem-obsidian;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12rem;
+}
+
+.jem-home-collection-card__content {
+    padding: 1.5rem 0;
+}
+
+.jem-home-collection-card__content p {
+    margin-bottom: 0.5rem;
+    color: $jem-merlot;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+}
+
+.jem-home-collection-card__content h3 {
+    margin-bottom: 0.75rem;
+    color: $jem-obsidian;
+    font-size: 2rem;
+}
+
+.jem-home-collection-card__content>span {
+    color: $jem-ink;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+@media (max-width: 991.98px) {
+
+    .jem-home-collection-card__visual,
+    .jem-home-collection-card__visual img {
+        min-height: 420px;
+    }
+}
+
+@media (max-width: 575.98px) {
+
+    .jem-home-collection-card__visual,
+    .jem-home-collection-card__visual img {
+        min-height: 480px;
+    }
+}
+
+// --------------------------------------------------
+// Filosofía JEM
+// --------------------------------------------------
+
+.jem-home-statement {
+    padding: 8rem 0 5rem;
+    background-color: $jem-sky;
+}
+
+.jem-home-statement__title {
+    max-width: 1000px;
+    margin: 0 auto 2rem;
+    color: $jem-obsidian;
+    font-size: clamp(3.8rem, 7vw, 6.5rem);
+    line-height: 0.92;
+}
+
+.jem-home-statement__text {
+    max-width: 700px;
+    margin: 0 auto;
+    color: $jem-ink;
+    font-size: 1rem;
+    line-height: 1.9;
+}
+
+
+// --------------------------------------------------
+// Valores JEM
+// --------------------------------------------------
+
+.jem-home-values {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 6rem;
+    border-top: 1px solid rgba(22, 22, 22, 0.2);
+}
+
+.jem-home-value {
+    position: relative;
+    padding: 2rem 2rem 1rem;
+}
+
+.jem-home-value+.jem-home-value {
+    border-left: 1px solid rgba(22, 22, 22, 0.2);
+}
+
+.jem-home-value__number {
+    display: block;
+    margin-bottom: 2rem;
+    color: $jem-merlot;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12rem;
+}
+
+.jem-home-value h3 {
+    margin-bottom: 0.75rem;
+    color: $jem-obsidian;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.18rem;
+}
+
+.jem-home-value p {
+    max-width: 260px;
+    margin-bottom: 0;
+    color: $jem-ink;
+    font-size: 0.8rem;
+    line-height: 1.7;
+}
+
+@media (max-width: 767.98px) {
+    .jem-home-statement {
+        padding: 5rem 0 3rem;
+    }
+
+    .jem-home-statement__title {
+        font-size: 3.4rem;
+    }
+
+    .jem-home-values {
+        grid-template-columns: 1fr;
+        margin-top: 4rem;
+    }
+
+    .jem-home-value {
+        padding: 1.75rem 0;
+        border-bottom: 1px solid rgba(22, 22, 22, 0.2);
+    }
+
+    .jem-home-value+.jem-home-value {
+        border-left: 0;
+    }
+
+    .jem-home-value__number {
+        margin-bottom: 1rem;
+    }
+}
+
+
+// --------------------------------------------------
+// Closing Home
+// --------------------------------------------------
+
+.jem-home-closing {
+    padding: 5.5rem 0;
+    background-color: $jem-white;
+}
+
+.jem-home-closing__logo {
+    display: block;
+    margin-bottom: 2rem;
+    color: $jem-merlot;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.35rem;
+}
+
+.jem-home-closing h2 {
+    margin-bottom: 1rem;
+    color: $jem-obsidian;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    line-height: 1;
+}
+
+.jem-home-closing p {
+    margin-bottom: 2rem;
+    color: $jem-ash;
+}
+
+
+// --------------------------------------------------
+// Home - Responsive
+// --------------------------------------------------
+
+@media (max-width: 991.98px) {
+    .jem-home-hero__row {
+        min-height: auto;
+        padding: 5rem 0;
+    }
+
+    .jem-home-hero__visual {
+        min-height: 420px;
+    }
+
+    .jem-home-section,
+    .jem-home-statement,
+    .jem-home-closing {
+        padding: 5rem 0;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .jem-home-hero__title {
+        font-size: 4rem;
+    }
+
+    .jem-home-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 1.25rem;
+        margin-bottom: 2rem;
+    }
+
+    .jem-home-collection-card__visual {
+        min-height: 350px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .jem-home-hero__row {
+        padding: 3.5rem 0;
+    }
+
+    .jem-home-hero__title {
+        font-size: 3.5rem;
+    }
+
+    .jem-home-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .jem-home-actions .btn {
+        width: 100%;
+    }
+
+    .jem-home-hero__visual {
+        min-height: 340px;
+    }
+
+    .jem-home-hero__visual-label {
+        font-size: 7rem;
+    }
+
+    .jem-home-section,
+    .jem-home-statement,
+    .jem-home-closing {
+        padding: 4rem 0;
+    }
+}
+
+// --------------------------------------------------
+// JEM Members
+// --------------------------------------------------
+
+.jem-join {
+    padding: 5rem 0;
+    border-top: 1px solid $jem-stone;
+    background-color: $jem-stone;
+}
+
+.jem-join__brand {
+    display: block;
+    margin-bottom: 1.25rem;
+    color: $jem-merlot;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.35rem;
+}
+
+.jem-join h2 {
+    margin-bottom: 1.25rem;
+    color: $jem-obsidian;
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 0.95;
+}
+
+.jem-join p {
+    max-width: 650px;
+    margin: 0 auto 1.75rem;
+    color: $jem-ash;
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+.jem-join__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0.8rem 2rem;
+    border: 1px solid $jem-obsidian;
+    background-color: $jem-obsidian;
+    color: $jem-white;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.jem-join__button:hover {
+    background-color: $jem-sky;
+    color: $jem-obsidian;
+}
+
+.jem-join__note {
+    display: block;
+    margin-top: 1rem;
+    color: $jem-ash;
+    font-size: 0.66rem;
+}
 
 // --------------------------------------------------
 // Footer JEM
 // --------------------------------------------------
 
 .jem-footer {
-    padding: 5rem 0 2rem;
+    padding: 4rem 0 1.5rem;
     background-color: $jem-obsidian;
     color: $jem-white;
 }
@@ -1454,19 +2061,165 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    margin-top: 4.5rem;
+    margin-top: 2rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
     color: rgba(255, 255, 255, 0.5);
     font-size: 0.72rem;
 }
 
+// --------------------------------------------------
+// Footer - Contacto
+// --------------------------------------------------
+
+.jem-footer-contact {
+    margin: 0;
+    font-style: normal;
+}
+
+.jem-footer-contact__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.jem-footer-contact__item+.jem-footer-contact__item {
+    margin-top: 1.1rem;
+}
+
+.jem-footer-contact__label {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+}
+
+.jem-footer-contact__item span:not(.jem-footer-contact__label),
+.jem-footer-contact__item a {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.86rem;
+    line-height: 1.6;
+    text-decoration: none;
+}
+
+.jem-footer-contact__item a:hover {
+    color: $jem-sky;
+}
+
 
 // --------------------------------------------------
-// Footer JEM - Responsive
+// Footer - Métodos de pago
+// --------------------------------------------------
+
+.jem-footer-payment-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-top: 4rem;
+    padding: 2rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.jem-footer-payment-title {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12rem;
+    text-transform: uppercase;
+}
+
+.jem-footer-payment-list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.jem-payment-method {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 38px;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.04rem;
+}
+
+.jem-payment-visa {
+    font-size: 0.82rem;
+    font-style: italic;
+    letter-spacing: 0.06rem;
+}
+
+.jem-mastercard-circles {
+    display: flex;
+    align-items: center;
+}
+
+.jem-mastercard-circles span {
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+}
+
+.jem-mastercard-circles span:first-child {
+    background-color: $jem-merlot;
+}
+
+.jem-mastercard-circles span:last-child {
+    margin-left: -5px;
+    background-color: $jem-sky;
+}
+
+
+// --------------------------------------------------
+// Footer inferior
+// --------------------------------------------------
+
+.jem-footer-bottom__right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+
+// --------------------------------------------------
+// Members / Footer - Responsive
 // --------------------------------------------------
 
 @media (max-width: 767.98px) {
+    .jem-join {
+        padding: 4rem 0;
+    }
+
+    .jem-join h2 {
+        font-size: 3rem;
+    }
+
+    .jem-footer-payment-section {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 1.25rem;
+        margin-top: 3rem;
+    }
+
+    .jem-footer-payment-list {
+        width: 100%;
+    }
+
+    .jem-footer-bottom__right {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+    }
+
     .jem-footer {
         padding: 3.5rem 0 1.5rem;
     }
@@ -1474,6 +2227,25 @@ body {
     .jem-footer-bottom {
         flex-direction: column;
         align-items: flex-start;
-        margin-top: 3rem;
+        gap: 1rem;
+        margin-top: 2rem;
     }
+
+    .jem-footer-contact {
+        margin-bottom: 2rem;
+    }
+
+    .jem-footer-payment-section {
+        margin-top: 2rem;
+    }
+
+    .jem-footer-bottom {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+    }
+
+    .jem-footer-bottom__right {
+        margin-top: 0.5rem;
+    }
+
 }

@@ -276,4 +276,115 @@ class ProductTest extends TestCase
         $response->assertOk();
         $response->assertCookie('jem_recent_products');
     }
+
+    public function test_min_price_filter_works(): void
+    {
+        $this->createProduct([
+            'name' => 'Producto Barato',
+            'slug' => 'producto-barato',
+            'price' => 15000,
+        ]);
+
+        $this->createProduct([
+            'name' => 'Producto Costoso',
+            'slug' => 'producto-costoso',
+            'price' => 30000,
+        ]);
+
+        $response = $this->get(
+            route('products.index', [
+                'min_price' => 20000,
+            ])
+        );
+
+        $response->assertOk();
+        $response->assertSee('Producto Costoso');
+        $response->assertDontSee('Producto Barato');
+    }
+
+    public function test_max_price_filter_works(): void
+    {
+        $this->createProduct([
+            'name' => 'Producto Económico',
+            'slug' => 'producto-economico',
+            'price' => 20000,
+        ]);
+
+        $this->createProduct([
+            'name' => 'Producto Premium',
+            'slug' => 'producto-premium',
+            'price' => 50000,
+        ]);
+
+        $response = $this->get(
+            route('products.index', [
+                'max_price' => 30000,
+            ])
+        );
+
+        $response->assertOk();
+        $response->assertSee('Producto Económico');
+        $response->assertDontSee('Producto Premium');
+    }
+
+    public function test_price_range_filter_works(): void
+    {
+        $this->createProduct([
+            'name' => 'Producto Bajo',
+            'slug' => 'producto-bajo',
+            'price' => 15000,
+        ]);
+
+        $this->createProduct([
+            'name' => 'Producto Dentro del Rango',
+            'slug' => 'producto-rango',
+            'price' => 30000,
+        ]);
+
+        $this->createProduct([
+            'name' => 'Producto Alto',
+            'slug' => 'producto-alto',
+            'price' => 60000,
+        ]);
+
+        $response = $this->get(
+            route('products.index', [
+                'min_price' => 20000,
+                'max_price' => 40000,
+            ])
+        );
+
+        $response->assertOk();
+        $response->assertSee('Producto Dentro del Rango');
+        $response->assertDontSee('Producto Bajo');
+        $response->assertDontSee('Producto Alto');
+    }
+
+    public function test_price_filter_uses_sale_price_when_available(): void
+    {
+        $this->createProduct([
+            'name' => 'Producto Rebajado',
+            'slug' => 'producto-rebajado',
+            'price' => 50000,
+            'sale_price' => 35000,
+        ]);
+
+        $this->createProduct([
+            'name' => 'Producto Sin Rebaja',
+            'slug' => 'producto-sin-rebaja',
+            'price' => 50000,
+            'sale_price' => null,
+        ]);
+
+        $response = $this->get(
+            route('products.index', [
+                'min_price' => 30000,
+                'max_price' => 40000,
+            ])
+        );
+
+        $response->assertOk();
+        $response->assertSee('Producto Rebajado');
+        $response->assertDontSee('Producto Sin Rebaja');
+    }
 }

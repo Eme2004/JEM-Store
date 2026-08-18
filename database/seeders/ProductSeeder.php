@@ -5,8 +5,10 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class ProductSeeder extends Seeder
+
 {
     public function run(): void
     {
@@ -50,6 +52,8 @@ class ProductSeeder extends Seeder
                 'sale_price' => null,
                 'stock' => 22,
                 'audience' => 'hombre',
+                'image' => 'products/jem-signature-polo.png',
+
             ],
             [
                 'category' => 'blusas',
@@ -236,6 +240,10 @@ class ProductSeeder extends Seeder
         foreach ($products as $productData) {
             $category = Category::where('slug', $productData['category'])->firstOrFail();
 
+            $image = collect(['png', 'jpg', 'jpeg', 'webp'])
+                ->map(fn($extension) => "products/{$productData['slug']}.$extension")
+                ->first(fn($path) => Storage::disk('public')->exists($path));
+
             Product::updateOrCreate(
                 ['slug' => $productData['slug']],
                 [
@@ -246,7 +254,7 @@ class ProductSeeder extends Seeder
                     'sale_price' => $productData['sale_price'],
                     'stock' => $productData['stock'],
                     'audience' => $productData['audience'],
-                    'image' => null,
+                    'image' => $image,
                     'active' => true,
                 ]
             );
