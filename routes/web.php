@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -19,6 +20,26 @@ Route::get('/productos', [ProductController::class, 'index'])
 
 Route::get('/productos/{product:slug}', [ProductController::class, 'show'])
     ->name('products.show');
+
+
+// --------------------------------------------------
+// Carrito de compras
+// --------------------------------------------------
+
+Route::get('/carrito', [CartController::class, 'index'])
+    ->name('cart.index');
+
+Route::post('/carrito', [CartController::class, 'store'])
+    ->name('cart.store');
+
+Route::patch('/carrito/{product}', [CartController::class, 'update'])
+    ->name('cart.update');
+
+Route::delete('/carrito/{product}', [CartController::class, 'destroy'])
+    ->name('cart.destroy');
+
+Route::delete('/carrito', [CartController::class, 'clear'])
+    ->name('cart.clear');
 
 
 // --------------------------------------------------

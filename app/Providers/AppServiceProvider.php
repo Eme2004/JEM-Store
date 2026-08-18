@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Category;
+use App\Services\CartService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -48,10 +49,13 @@ class AppServiceProvider extends ServiceProvider
                 ->with('children')
                 ->get();
 
+            $cartCount = app(CartService::class)->count();
+
             $view->with(compact(
                 'menMenuCategories',
                 'womenMenuCategories',
-                'shopMenuCategories'
+                'shopMenuCategories',
+                'cartCount'
             ));
         });
     }
