@@ -6,17 +6,21 @@
 # el document root en /htdocs y no permiten apuntarlo a /htdocs/public,
 # que es donde Laravel realmente sirve la app.
 #
-# Este archivo reenvía internamente CUALQUIER request de /htdocs/* hacia
-# /htdocs/public/*, sin cambiar la URL visible en el navegador. Como el
-# reenvío aplica a todo (incluyendo assets de /build), no rompe rutas,
-# CSS/JS compilados ni storage. Como efecto secundario deseable, ningún
-# archivo fuera de /public queda accesible directamente desde la web
-# (composer.json, .env, artisan, etc. nunca se sirven).
-#
 # NO borrar public/.htaccess: ese sigue siendo el que enruta hacia
 # index.php dentro de /public.
+#
+# Orden importa: la regla de /storage debe ir ANTES que la regla
+# genérica de /public, si no la genérica la captura primero y busca
+# un public/storage/... que no existe (InfinityFree no soporta el
+# symlink de "php artisan storage:link" sobre FTP).
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteRule ^(.*)$ public/$1 [L]
+
+    # Sirve archivos públicos (ej. imágenes de producto) directamente
+    # desde storage/app/public, sin depender de un symlink.
+    RewriteRule ^storage/(.*)$ /storage/app/public/$1 [END]
+
+    # Todo lo demás se reenvía internamente a /public.
+    RewriteRule (.*) /public/$1 [L]
 </IfModule>
