@@ -374,6 +374,18 @@
                                         </li>
 
                                         <li>
+                                            <a class="dropdown-item" href="{{ route('orders.index') }}">
+                                                Mis pedidos
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('reports.index') }}">
+                                                Reportes de ventas
+                                            </a>
+                                        </li>
+
+                                        <li>
                                             <hr class="dropdown-divider">
                                         </li>
 
@@ -396,15 +408,21 @@
 
                             {{-- Carrito --}}
                             <li class="nav-item">
-                                <span class="nav-link jem-icon-link jem-cart-icon" title="Carrito"
-                                    aria-label="Carrito">
+                                <a href="{{ route('cart.index') }}" class="nav-link jem-icon-link jem-cart-icon"
+                                    title="Carrito" aria-label="Carrito">
                                     <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
                                         stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
                                         stroke-linejoin="round" aria-hidden="true">
                                         <path d="M6 8H18L19 21H5L6 8Z"></path>
                                         <path d="M9 8V6C9 4.3 10.3 3 12 3C13.7 3 15 4.3 15 6V8"></path>
                                     </svg>
-                                </span>
+
+                                    @if ($cartCount > 0)
+                                        <span class="jem-cart-count">
+                                            {{ $cartCount }}
+                                        </span>
+                                    @endif
+                                </a>
                             </li>
 
                         </ul>
@@ -577,6 +595,18 @@
                                 <li>
                                     <a href="{{ route('profile.edit') }}">
                                         Editar perfil
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('orders.index') }}">
+                                        Mis pedidos
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('reports.index') }}">
+                                        Reportes de ventas
                                     </a>
                                 </li>
                             @endguest

@@ -94,26 +94,72 @@
                                         Mis pedidos
                                     </h2>
                                 </div>
+
+                                @if ($orders->isNotEmpty())
+                                    <a href="{{ route('orders.index') }}" class="jem-mega-view-all">
+                                        Ver todos
+                                    </a>
+                                @endif
                             </div>
 
-                            <div class="account-orders-empty">
+                            @if ($orders->isEmpty())
 
-                                {{-- Parte 2: reemplazar este bloque por el listado real de pedidos. --}}
+                                <div class="account-orders-empty">
 
-                                <span class="account-orders-number">
-                                    00
-                                </span>
+                                    <span class="account-orders-number">
+                                        00
+                                    </span>
 
-                                <h3 class="account-orders-title">
-                                    Aún no tienes pedidos
-                                </h3>
+                                    <h3 class="account-orders-title">
+                                        Aún no tienes pedidos
+                                    </h3>
 
-                                <p class="account-orders-text mb-0">
-                                    Cuando realices una compra, podrás consultar aquí
-                                    el estado y los detalles de tus pedidos.
-                                </p>
+                                    <p class="account-orders-text mb-0">
+                                        Cuando realices una compra, podrás consultar aquí
+                                        el estado y los detalles de tus pedidos.
+                                    </p>
 
-                            </div>
+                                </div>
+
+                            @else
+
+                                <div class="account-orders-list">
+
+                                    @foreach ($orders as $order)
+                                        <a href="{{ route('orders.show', $order) }}" class="account-order-row">
+
+                                            <div class="account-order-main">
+                                                <span class="account-order-number">
+                                                    {{ $order->order_number }}
+                                                </span>
+
+                                                <span class="account-order-date">
+                                                    {{ $order->created_at->format('d/m/Y') }}
+                                                </span>
+                                            </div>
+
+                                            <div class="account-order-side">
+                                                <span class="account-order-status">
+                                                    {{ $order->status_label }}
+                                                </span>
+
+                                                <span class="account-order-total">
+                                                    ₡{{ number_format($order->total, 0, ',', '.') }}
+                                                </span>
+                                            </div>
+
+                                        </a>
+                                    @endforeach
+
+                                </div>
+
+                                @if ($ordersCount > $orders->count())
+                                    <p class="account-orders-more mb-0">
+                                        Mostrando {{ $orders->count() }} de {{ $ordersCount }} pedidos.
+                                    </p>
+                                @endif
+
+                            @endif
 
                         </div>
                     </div>

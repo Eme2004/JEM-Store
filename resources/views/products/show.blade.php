@@ -116,14 +116,31 @@
                         <div class="product-detail-divider"></div>
 
 
-                        @if ($product->stock > 0)
-                            <button type="button" class="btn btn-dark product-detail-button" disabled>
-                                Agregar al carrito
-                            </button>
+                        @if (session('error'))
+                            <div class="jem-alert jem-alert-error mb-3" role="alert">
+                                {{ session('error') }}
+                            </div>
+                        @endif
 
-                            <p class="product-detail-note">
-                                La función de carrito se habilitará próximamente.
-                            </p>
+                        @if ($product->stock > 0)
+                            <form action="{{ route('cart.store') }}" method="POST" class="product-detail-form">
+                                @csrf
+
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                                <div class="product-detail-quantity">
+                                    <label for="quantity" class="product-detail-meta-label">
+                                        Cantidad
+                                    </label>
+
+                                    <input type="number" id="quantity" name="quantity" min="1"
+                                        max="{{ $product->stock }}" value="1" class="product-detail-quantity-input">
+                                </div>
+
+                                <button type="submit" class="btn btn-dark product-detail-button">
+                                    Agregar al carrito
+                                </button>
+                            </form>
                         @else
                             <button type="button" class="btn btn-dark product-detail-button" disabled>
                                 Producto agotado

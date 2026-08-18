@@ -15,7 +15,14 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        return view('profile.show', compact('user'));
+        $orders = $user->orders()
+            ->latest()
+            ->take(5)
+            ->get();
+
+        $ordersCount = $user->orders()->count();
+
+        return view('profile.show', compact('user', 'orders', 'ordersCount'));
     }
 
     /**

@@ -319,6 +319,10 @@ body {
 }
 
 .account-panel-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid $jem-stone;
 }
@@ -2248,4 +2252,728 @@ body {
         margin-top: 0.5rem;
     }
 
+}
+
+
+// --------------------------------------------------
+// Alertas de error
+// --------------------------------------------------
+
+.jem-alert-error {
+    border-left-color: $jem-merlot;
+    background-color: rgba(119, 56, 70, 0.12);
+    color: $jem-merlot;
+}
+
+
+// --------------------------------------------------
+// Ícono de carrito - contador
+// --------------------------------------------------
+
+.jem-cart-icon {
+    position: relative;
+}
+
+.jem-cart-count {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 50%;
+    background-color: $jem-merlot;
+    color: $jem-white;
+    font-size: 0.6rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+
+// --------------------------------------------------
+// Formulario "Agregar al carrito"
+// --------------------------------------------------
+
+.product-detail-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.product-detail-quantity {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.product-detail-quantity-input {
+    width: 100px;
+    min-height: 46px;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid $jem-stone;
+    border-radius: 0;
+    background-color: $jem-white;
+    color: $jem-obsidian;
+    font-size: 0.9rem;
+}
+
+.product-detail-quantity-input:focus {
+    border-color: $jem-ink;
+    box-shadow: none;
+    outline: none;
+}
+
+
+// --------------------------------------------------
+// Carrito JEM
+// --------------------------------------------------
+
+.cart-page {
+    min-height: 80vh;
+    padding: 3.5rem 0 6rem;
+    background-color: $jem-porcelain;
+}
+
+.cart-header {
+    max-width: 650px;
+    margin-bottom: 2.5rem;
+}
+
+.cart-empty {
+    padding: 5rem 2rem;
+    background-color: $jem-white;
+    text-align: center;
+}
+
+.cart-empty p {
+    color: $jem-ash;
+}
+
+.cart-empty-button {
+    min-height: 48px;
+    padding: 0.8rem 1.8rem;
+    border-radius: 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05rem;
+    text-transform: uppercase;
+}
+
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid $jem-stone;
+}
+
+.cart-item-image {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background-color: $jem-stone;
+}
+
+.cart-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cart-item-body {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.cart-item-category {
+    margin-bottom: 0.35rem;
+    color: $jem-ash;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.06rem;
+    text-transform: uppercase;
+}
+
+.cart-item-name {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: $jem-obsidian;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.cart-item-name:hover {
+    color: $jem-merlot;
+}
+
+.cart-item-price {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+    color: $jem-obsidian;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.cart-item-stock {
+    margin: 0;
+    color: $jem-ash;
+    font-size: 0.72rem;
+}
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cart-item-quantity-input {
+    width: 64px;
+    min-height: 40px;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid $jem-stone;
+    border-radius: 0;
+    background-color: $jem-white;
+    color: $jem-obsidian;
+    font-size: 0.85rem;
+}
+
+.cart-item-quantity-button {
+    min-height: 40px;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid $jem-obsidian;
+    background-color: transparent;
+    color: $jem-obsidian;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04rem;
+    text-transform: uppercase;
+}
+
+.cart-item-quantity-button:hover {
+    background-color: $jem-sky;
+}
+
+.cart-item-subtotal {
+    color: $jem-obsidian;
+    font-size: 0.95rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.cart-item-remove-button {
+    border: 0;
+    background: transparent;
+    color: $jem-ash;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04rem;
+    text-decoration: underline;
+    text-transform: uppercase;
+}
+
+.cart-item-remove-button:hover {
+    color: $jem-merlot;
+}
+
+.cart-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.cart-clear-link {
+    border: 0;
+    background: transparent;
+    color: $jem-ash;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.cart-clear-link:hover {
+    color: $jem-merlot;
+}
+
+.cart-summary {
+    position: sticky;
+    top: 2rem;
+    padding: 2rem;
+    border: 1px solid $jem-stone;
+    background-color: $jem-white;
+}
+
+.cart-summary-title {
+    margin-bottom: 1.5rem;
+    color: $jem-obsidian;
+    font-size: 1.35rem;
+    font-weight: 700;
+}
+
+.cart-summary-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid $jem-stone;
+    color: $jem-obsidian;
+    font-size: 0.9rem;
+}
+
+.cart-summary-total {
+    border-bottom: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.cart-checkout-button {
+    width: 100%;
+    min-height: 52px;
+    margin-top: 1.5rem;
+    border-radius: 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.07rem;
+    text-transform: uppercase;
+}
+
+
+// --------------------------------------------------
+// Carrito - Responsive
+// --------------------------------------------------
+
+@media (max-width: 767.98px) {
+    .cart-page {
+        padding: 2.5rem 0 4rem;
+    }
+
+    .cart-item {
+        grid-template-columns: 90px 1fr;
+        gap: 1rem;
+    }
+
+    .cart-item-body {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .cart-summary {
+        position: static;
+    }
+
+    .cart-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}
+
+
+// --------------------------------------------------
+// Checkout JEM
+// --------------------------------------------------
+
+.checkout-page {
+    min-height: 80vh;
+    padding: 3.5rem 0 6rem;
+    background-color: $jem-porcelain;
+}
+
+.checkout-payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.checkout-payment-option {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid $jem-stone;
+    background-color: $jem-white;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.checkout-payment-option:has(input:checked) {
+    border-color: $jem-obsidian;
+    background-color: $jem-porcelain;
+}
+
+.checkout-payment-option input {
+    accent-color: $jem-obsidian;
+}
+
+.checkout-payment-option span {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.checkout-payment-option strong {
+    color: $jem-obsidian;
+    font-size: 0.9rem;
+}
+
+.checkout-payment-option small {
+    color: $jem-ash;
+    font-size: 0.75rem;
+}
+
+.checkout-card-fields {
+    padding-top: 1.5rem;
+    border-top: 1px solid $jem-stone;
+}
+
+.checkout-summary-items {
+    margin-bottom: 0.5rem;
+}
+
+.checkout-summary-item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    color: $jem-obsidian;
+    font-size: 0.85rem;
+}
+
+.checkout-summary-item small {
+    margin-left: 0.4rem;
+    color: $jem-ash;
+    font-size: 0.72rem;
+}
+
+
+// --------------------------------------------------
+// Confirmación de pedido
+// --------------------------------------------------
+
+.checkout-success-page {
+    min-height: 80vh;
+    padding: 4.5rem 0 6rem;
+    background-color: $jem-porcelain;
+}
+
+.checkout-success-panel {
+    position: relative;
+    padding: 3rem;
+    border: 1px solid $jem-stone;
+    background-color: $jem-white;
+}
+
+.checkout-success-panel::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: calc(100% + 2px);
+    height: 5px;
+    background-color: $jem-sky;
+}
+
+.checkout-success-kicker {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: $jem-merlot;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14rem;
+    text-transform: uppercase;
+}
+
+.checkout-success-title {
+    margin-bottom: 0.75rem;
+    color: $jem-obsidian;
+    font-size: 2.5rem;
+}
+
+.checkout-success-text {
+    max-width: 560px;
+    margin-bottom: 2rem;
+    color: $jem-ash;
+}
+
+.checkout-success-numbers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background-color: $jem-porcelain;
+}
+
+.checkout-success-number {
+    display: block;
+    margin-top: 0.35rem;
+    color: $jem-obsidian;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 0.02rem;
+}
+
+.checkout-success-items {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid $jem-stone;
+}
+
+.checkout-success-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+}
+
+
+// --------------------------------------------------
+// Checkout - Responsive
+// --------------------------------------------------
+
+@media (max-width: 767.98px) {
+    .checkout-page {
+        padding: 2.5rem 0 4rem;
+    }
+
+    .checkout-success-page {
+        padding: 3rem 0 3rem;
+    }
+
+    .checkout-success-panel {
+        padding: 2rem 1.5rem;
+    }
+
+    .checkout-success-numbers {
+        gap: 1.5rem;
+    }
+
+    .checkout-success-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .checkout-success-actions .btn {
+        width: 100%;
+    }
+}
+
+
+// --------------------------------------------------
+// Historial de pedidos
+// --------------------------------------------------
+
+.account-orders-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.account-order-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid $jem-stone;
+    color: $jem-obsidian;
+    text-decoration: none;
+    transition: padding-left 0.2s ease;
+}
+
+.account-order-row:first-child {
+    padding-top: 0;
+}
+
+.account-order-row:last-child {
+    border-bottom: 0;
+}
+
+.account-order-row:hover {
+    padding-left: 0.35rem;
+    color: $jem-obsidian;
+}
+
+.account-order-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.account-order-number {
+    color: $jem-obsidian;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.02rem;
+}
+
+.account-order-date {
+    color: $jem-ash;
+    font-size: 0.75rem;
+}
+
+.account-order-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.3rem;
+}
+
+.account-order-status {
+    color: $jem-merlot;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06rem;
+    text-transform: uppercase;
+}
+
+.account-order-total {
+    color: $jem-obsidian;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.account-orders-more {
+    margin-top: 1.5rem;
+    color: $jem-ash;
+    font-size: 0.75rem;
+    text-align: center;
+}
+
+
+// --------------------------------------------------
+// Historial de pedidos - Responsive
+// --------------------------------------------------
+
+@media (max-width: 575.98px) {
+    .account-order-row {
+        align-items: flex-start;
+    }
+
+    .account-order-side {
+        align-items: flex-end;
+        text-align: right;
+    }
+}
+
+
+// --------------------------------------------------
+// Reportes de ventas
+// --------------------------------------------------
+
+.report-stats {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    margin-bottom: 2.5rem;
+    background-color: $jem-stone;
+    border: 1px solid $jem-stone;
+}
+
+.report-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.25rem 1.5rem;
+    background-color: $jem-white;
+}
+
+.report-stat-highlight {
+    background-color: $jem-obsidian;
+}
+
+.report-stat-highlight .report-stat-label {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.report-stat-highlight .report-stat-value {
+    color: $jem-white;
+}
+
+.report-stat-label {
+    color: $jem-ash;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08rem;
+    text-transform: uppercase;
+}
+
+.report-stat-value {
+    color: $jem-obsidian;
+    font-size: 1.35rem;
+    font-weight: 700;
+}
+
+.report-table-wrap {
+    overflow-x: auto;
+    border: 1px solid $jem-stone;
+    background-color: $jem-white;
+}
+
+.report-table {
+    margin-bottom: 0;
+}
+
+.report-table thead th {
+    padding: 1rem;
+    border-bottom: 1px solid $jem-obsidian;
+    color: $jem-obsidian;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06rem;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.report-table tbody td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid $jem-stone;
+    color: $jem-obsidian;
+    font-size: 0.85rem;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.report-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.report-table a {
+    color: $jem-obsidian;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.report-table a:hover {
+    color: $jem-merlot;
+}
+
+
+// --------------------------------------------------
+// Reportes de ventas - Responsive
+// --------------------------------------------------
+
+@media (max-width: 991.98px) {
+    .report-stats {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .report-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
