@@ -201,13 +201,15 @@
                                 <span>₡{{ number_format($total, 0, ',', '.') }}</span>
                             </div>
 
-                            <button type="button" class="btn btn-dark cart-checkout-button" disabled>
-                                Continuar al pago
-                            </button>
-
-                            <p class="product-detail-note">
-                                El proceso de pago estará disponible próximamente.
-                            </p>
+                            @auth
+                                <a href="{{ route('checkout.index') }}" class="btn btn-dark cart-checkout-button">
+                                    Continuar al pago
+                                </a>
+                            @else
+                                <a href="{{ route('login') }}" class="btn btn-dark cart-checkout-button">
+                                    Inicia sesión para continuar
+                                </a>
+                            @endauth
 
                         </div>
 

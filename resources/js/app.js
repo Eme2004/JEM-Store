@@ -40,3 +40,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 180);
     }, 5000);
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const paymentMethods = document.querySelectorAll('[data-payment-method]');
+    const cardFields = document.querySelector('[data-card-fields]');
+
+    if (paymentMethods.length === 0 || !cardFields) {
+        return;
+    }
+
+    const syncCardFields = () => {
+        const selected = document.querySelector('[data-payment-method]:checked');
+        cardFields.classList.toggle('d-none', selected?.value !== 'card');
+    };
+
+    paymentMethods.forEach((input) => {
+        input.addEventListener('change', syncCardFields);
+    });
+
+    syncCardFields();
+});

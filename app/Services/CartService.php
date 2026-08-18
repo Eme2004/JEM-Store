@@ -12,6 +12,16 @@ class CartService
     private const SESSION_KEY = 'cart';
 
     /**
+     * Contenido crudo de la sesión (product_id + cantidad solicitada),
+     * sin reconciliar contra el stock actual. Lo usa CheckoutService para
+     * detectar si el stock cambió desde que se agregó al carrito.
+     */
+    public function raw(): array
+    {
+        return Session::get(self::SESSION_KEY, []);
+    }
+
+    /**
      * Recupera las líneas del carrito reconstruyendo precio y stock
      * desde la base de datos. Nunca se confía en lo guardado en sesión
      * salvo el product_id y la cantidad solicitada.
