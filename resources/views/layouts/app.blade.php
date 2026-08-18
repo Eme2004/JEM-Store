@@ -374,6 +374,12 @@
                                         </li>
 
                                         <li>
+                                            <a class="dropdown-item" href="{{ route('orders.index') }}">
+                                                Mis pedidos
+                                            </a>
+                                        </li>
+
+                                        <li>
                                             <hr class="dropdown-divider">
                                         </li>
 
@@ -583,6 +589,12 @@
                                 <li>
                                     <a href="{{ route('profile.edit') }}">
                                         Editar perfil
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('orders.index') }}">
+                                        Mis pedidos
                                     </a>
                                 </li>
                             @endguest

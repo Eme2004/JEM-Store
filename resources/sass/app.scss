@@ -319,6 +319,10 @@ body {
 }
 
 .account-panel-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid $jem-stone;
 }
@@ -2765,5 +2769,102 @@ body {
 
     .checkout-success-actions .btn {
         width: 100%;
+    }
+}
+
+
+// --------------------------------------------------
+// Historial de pedidos
+// --------------------------------------------------
+
+.account-orders-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.account-order-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid $jem-stone;
+    color: $jem-obsidian;
+    text-decoration: none;
+    transition: padding-left 0.2s ease;
+}
+
+.account-order-row:first-child {
+    padding-top: 0;
+}
+
+.account-order-row:last-child {
+    border-bottom: 0;
+}
+
+.account-order-row:hover {
+    padding-left: 0.35rem;
+    color: $jem-obsidian;
+}
+
+.account-order-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.account-order-number {
+    color: $jem-obsidian;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.02rem;
+}
+
+.account-order-date {
+    color: $jem-ash;
+    font-size: 0.75rem;
+}
+
+.account-order-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.3rem;
+}
+
+.account-order-status {
+    color: $jem-merlot;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06rem;
+    text-transform: uppercase;
+}
+
+.account-order-total {
+    color: $jem-obsidian;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.account-orders-more {
+    margin-top: 1.5rem;
+    color: $jem-ash;
+    font-size: 0.75rem;
+    text-align: center;
+}
+
+
+// --------------------------------------------------
+// Historial de pedidos - Responsive
+// --------------------------------------------------
+
+@media (max-width: 575.98px) {
+    .account-order-row {
+        align-items: flex-start;
+    }
+
+    .account-order-side {
+        align-items: flex-end;
+        text-align: right;
     }
 }

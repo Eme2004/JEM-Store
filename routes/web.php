@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
@@ -78,5 +79,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/checkout/{order}/confirmacion', [CheckoutController::class, 'success'])
         ->name('checkout.success');
+
+
+    // --------------------------------------------------
+    // Historial de pedidos
+    // --------------------------------------------------
+
+    Route::get('/pedidos', [OrderController::class, 'index'])
+        ->name('orders.index');
+
+    Route::get('/pedidos/{order}', [OrderController::class, 'show'])
+        ->name('orders.show');
 
 });

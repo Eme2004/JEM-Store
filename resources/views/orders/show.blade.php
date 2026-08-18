@@ -6,31 +6,36 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-xl-9">
 
+                    <div class="product-detail-back">
+                        <a href="{{ route('orders.index') }}">
+                            ← Volver a mis pedidos
+                        </a>
+                    </div>
+
                     <div class="checkout-success-panel">
 
                         <span class="checkout-success-kicker">
-                            Pedido confirmado
+                            Pedido {{ $order->order_number }}
                         </span>
 
                         <h1 class="jem-editorial-title checkout-success-title">
-                            Gracias por tu compra
+                            Detalle del pedido
                         </h1>
 
                         <p class="checkout-success-text">
-                            Te enviamos la confirmación a {{ $order->shipping_email }}.
-                            Guarda tu número de pedido y de seguimiento.
+                            Realizado el {{ $order->created_at->format('d/m/Y') }}.
                         </p>
 
                         @include('orders._summary', ['order' => $order])
 
 
                         <div class="checkout-success-actions">
-                            <a href="{{ route('products.index') }}" class="btn btn-dark account-button">
-                                Seguir explorando
+                            <a href="{{ route('orders.index') }}" class="btn btn-dark account-button">
+                                Volver a mis pedidos
                             </a>
 
-                            <a href="{{ route('profile.show') }}" class="btn jem-outline-button">
-                                Ver mi cuenta
+                            <a href="{{ route('products.index') }}" class="btn jem-outline-button">
+                                Seguir explorando
                             </a>
                         </div>
 
