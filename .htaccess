@@ -1,0 +1,22 @@
+# --------------------------------------------------
+# JEM Store - Reenvío para hosting sin document root configurable
+# --------------------------------------------------
+#
+# InfinityFree (y la mayoría de hostings compartidos gratuitos) fijan
+# el document root en /htdocs y no permiten apuntarlo a /htdocs/public,
+# que es donde Laravel realmente sirve la app.
+#
+# Este archivo reenvía internamente CUALQUIER request de /htdocs/* hacia
+# /htdocs/public/*, sin cambiar la URL visible en el navegador. Como el
+# reenvío aplica a todo (incluyendo assets de /build), no rompe rutas,
+# CSS/JS compilados ni storage. Como efecto secundario deseable, ningún
+# archivo fuera de /public queda accesible directamente desde la web
+# (composer.json, .env, artisan, etc. nunca se sirven).
+#
+# NO borrar public/.htaccess: ese sigue siendo el que enruta hacia
+# index.php dentro de /public.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

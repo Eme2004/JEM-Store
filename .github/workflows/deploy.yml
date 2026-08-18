@@ -1,0 +1,89 @@
+name: Deploy a InfinityFree
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-infinityfree
+  cancel-in-progress: false
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, ctype, json, bcmath, pdo, pdo_sqlite, sqlite3, fileinfo, tokenizer, openssl, curl, dom, filter, hash, session, zip, gd
+          coverage: none
+          tools: composer:v2
+
+      - name: Cachear dependencias de Composer
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: composer-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-${{ runner.os }}-
+
+      - name: Instalar dependencias de Composer (incluye dev, necesarias para los tests)
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Instalar dependencias de Node
+        run: npm ci
+
+      - name: Compilar assets (Vite)
+        run: npm run build
+
+      - name: Preparar entorno de pruebas
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      # --------------------------------------------------
+      # Si algo de aquí para arriba falla, el job se detiene
+      # y el paso de despliegue de abajo NUNCA se ejecuta.
+      # --------------------------------------------------
+      - name: Correr pruebas automatizadas
+        run: php artisan test
+
+      - name: Reinstalar dependencias de Composer solo para producción
+        run: composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader
+
+      - name: Desplegar por FTP a InfinityFree
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          server-dir: /htdocs/
+          # dangerous-clean-slate se deja en false (valor por defecto):
+          # el action solo sube archivos nuevos/cambiados y NUNCA borra
+          # nada que ya exista en el servidor. Es lo que evita que se
+          # pise database.sqlite o las imágenes subidas a mano.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            node_modules/**
+            tests/**
+            .env
+            .env.example
+            .env.infinityfree.example
+            database/database.sqlite
+            database/*.sqlite
+            storage/app/public/**
+            public/storage/**
