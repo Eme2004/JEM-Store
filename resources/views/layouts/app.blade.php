@@ -380,6 +380,12 @@
                                         </li>
 
                                         <li>
+                                            <a class="dropdown-item" href="{{ route('reports.index') }}">
+                                                Reportes de ventas
+                                            </a>
+                                        </li>
+
+                                        <li>
                                             <hr class="dropdown-divider">
                                         </li>
 
@@ -595,6 +601,12 @@
                                 <li>
                                     <a href="{{ route('orders.index') }}">
                                         Mis pedidos
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('reports.index') }}">
+                                        Reportes de ventas
                                     </a>
                                 </li>
                             @endguest

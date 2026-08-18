@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -90,5 +91,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/pedidos/{order}', [OrderController::class, 'show'])
         ->name('orders.show');
+
+
+    // --------------------------------------------------
+    // Reportes de ventas
+    // --------------------------------------------------
+
+    Route::get('/reportes', [ReportController::class, 'index'])
+        ->name('reports.index');
+
+    Route::get('/reportes/pdf', [ReportController::class, 'pdf'])
+        ->name('reports.pdf');
 
 });

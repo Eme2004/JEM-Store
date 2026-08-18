@@ -2868,3 +2868,112 @@ body {
         text-align: right;
     }
 }
+
+
+// --------------------------------------------------
+// Reportes de ventas
+// --------------------------------------------------
+
+.report-stats {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    margin-bottom: 2.5rem;
+    background-color: $jem-stone;
+    border: 1px solid $jem-stone;
+}
+
+.report-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.25rem 1.5rem;
+    background-color: $jem-white;
+}
+
+.report-stat-highlight {
+    background-color: $jem-obsidian;
+}
+
+.report-stat-highlight .report-stat-label {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.report-stat-highlight .report-stat-value {
+    color: $jem-white;
+}
+
+.report-stat-label {
+    color: $jem-ash;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08rem;
+    text-transform: uppercase;
+}
+
+.report-stat-value {
+    color: $jem-obsidian;
+    font-size: 1.35rem;
+    font-weight: 700;
+}
+
+.report-table-wrap {
+    overflow-x: auto;
+    border: 1px solid $jem-stone;
+    background-color: $jem-white;
+}
+
+.report-table {
+    margin-bottom: 0;
+}
+
+.report-table thead th {
+    padding: 1rem;
+    border-bottom: 1px solid $jem-obsidian;
+    color: $jem-obsidian;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06rem;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.report-table tbody td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid $jem-stone;
+    color: $jem-obsidian;
+    font-size: 0.85rem;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.report-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.report-table a {
+    color: $jem-obsidian;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.report-table a:hover {
+    color: $jem-merlot;
+}
+
+
+// --------------------------------------------------
+// Reportes de ventas - Responsive
+// --------------------------------------------------
+
+@media (max-width: 991.98px) {
+    .report-stats {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .report-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
