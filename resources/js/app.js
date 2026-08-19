@@ -43,6 +43,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    const REVEAL_SELECTORS = [
+        '.product-card',
+        '.jem-home-collection-card',
+        '.jem-home-value',
+        '.cart-item',
+        '.account-order-row',
+        '.checkout-payment-option',
+        '.report-stat',
+        '.auth-card',
+        '.account-panel',
+        '.profile-edit-panel',
+        '.checkout-success-panel',
+        '.catalog-filters',
+        '.jem-home-heading',
+        '.jem-home-statement__title',
+        '.recent-products-header',
+    ];
+
+    const revealElements = document.querySelectorAll(REVEAL_SELECTORS.join(','));
+
+    if (revealElements.length === 0) {
+        return;
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    revealElements.forEach((el, index) => {
+        el.classList.add('jem-reveal');
+        el.style.transitionDelay = `${(index % 4) * 70}ms`;
+    });
+
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+        revealElements.forEach((el) => el.classList.add('jem-reveal--visible'));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('jem-reveal--visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+    revealElements.forEach((el) => observer.observe(el));
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
     const paymentMethods = document.querySelectorAll('[data-payment-method]');
     const cardFields = document.querySelector('[data-card-fields]');
 

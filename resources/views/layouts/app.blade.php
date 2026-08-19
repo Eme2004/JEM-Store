@@ -385,6 +385,14 @@
                                             </a>
                                         </li>
 
+                                        @if (Auth::user()->is_admin)
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('admin.products.index') }}">
+                                                    Panel de administración
+                                                </a>
+                                            </li>
+                                        @endif
+
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>

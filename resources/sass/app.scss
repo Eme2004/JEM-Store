@@ -2977,3 +2977,354 @@ body {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+
+// --------------------------------------------------
+// Animaciones - Reveal al hacer scroll
+// --------------------------------------------------
+// Clase agregada dinámicamente por app.js vía IntersectionObserver
+// sobre tarjetas, paneles y filas ya existentes en todas las páginas.
+
+.jem-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+        opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.jem-reveal.jem-reveal--visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .jem-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+
+// --------------------------------------------------
+// Animaciones - Hover / interacción
+// --------------------------------------------------
+
+.product-card,
+.jem-home-collection-card {
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover,
+.jem-home-collection-card:hover {
+    transform: translateY(-4px);
+}
+
+.account-panel,
+.auth-card,
+.profile-edit-panel,
+.checkout-success-panel,
+.cart-summary,
+.catalog-filters,
+.report-stat {
+    transition:
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+}
+
+.account-panel:hover,
+.cart-summary:hover,
+.report-stat:hover {
+    box-shadow: 0 20px 40px rgba(22, 22, 22, 0.06);
+}
+
+.checkout-payment-option {
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.checkout-payment-option:hover {
+    transform: translateY(-2px);
+}
+
+.btn {
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.account-order-row {
+    transition:
+        padding-left 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.account-order-row:hover {
+    background-color: $jem-porcelain;
+}
+
+
+// --------------------------------------------------
+// Panel de administración
+// --------------------------------------------------
+
+.admin-topbar {
+    border-bottom: 1px solid $jem-stone;
+    background-color: $jem-white;
+}
+
+.admin-topbar-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem;
+    min-height: 72px;
+    padding: 1rem 0;
+}
+
+.admin-topbar-logo {
+    margin-right: 0;
+}
+
+.admin-topbar-label {
+    color: $jem-merlot;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14rem;
+    text-transform: uppercase;
+}
+
+.admin-topbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-left: auto;
+}
+
+.admin-topbar-link {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: $jem-obsidian;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.admin-topbar-link:hover {
+    color: $jem-merlot;
+}
+
+.admin-page {
+    min-height: 80vh;
+    padding: 3rem 0 6rem;
+    background-color: $jem-porcelain;
+}
+
+.admin-page-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.admin-page-title {
+    color: $jem-obsidian;
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.admin-page-subtitle {
+    color: $jem-ash;
+    font-size: 0.9rem;
+}
+
+.admin-table-wrap {
+    overflow-x: auto;
+    border: 1px solid $jem-stone;
+    background-color: $jem-white;
+}
+
+.admin-table {
+    margin-bottom: 0;
+}
+
+.admin-table thead th {
+    padding: 1rem;
+    border-bottom: 1px solid $jem-obsidian;
+    color: $jem-obsidian;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06rem;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.admin-table tbody td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid $jem-stone;
+    color: $jem-obsidian;
+    font-size: 0.85rem;
+    vertical-align: middle;
+}
+
+.admin-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.admin-table-thumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 60px;
+    overflow: hidden;
+    background-color: $jem-stone;
+}
+
+.admin-table-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.admin-table-thumb span {
+    color: $jem-ink;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1rem;
+}
+
+.admin-table-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    white-space: nowrap;
+}
+
+.admin-table-actions a,
+.admin-table-actions button {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: $jem-ink;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.02rem;
+    text-decoration: underline;
+    text-transform: uppercase;
+}
+
+.admin-table-actions button {
+    color: $jem-merlot;
+}
+
+.admin-table-actions a:hover,
+.admin-table-actions button:hover {
+    color: $jem-merlot;
+}
+
+.admin-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.05rem;
+    text-transform: uppercase;
+}
+
+.admin-badge-active {
+    background-color: $jem-sky;
+    color: $jem-obsidian;
+}
+
+.admin-badge-inactive {
+    background-color: $jem-stone;
+    color: $jem-ash;
+}
+
+.admin-form-panel {
+    position: relative;
+    max-width: 720px;
+    padding: 2.75rem;
+    border: 1px solid $jem-stone;
+    background-color: $jem-white;
+}
+
+.admin-form-panel::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: calc(100% + 2px);
+    height: 5px;
+    background-color: $jem-sky;
+}
+
+.admin-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.admin-form-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+}
+
+.admin-form-current-image {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.admin-form-current-image img {
+    width: 70px;
+    height: 88px;
+    object-fit: cover;
+    background-color: $jem-stone;
+}
+
+@media (max-width: 767.98px) {
+    .admin-topbar-row {
+        gap: 0.85rem;
+    }
+
+    .admin-topbar-nav {
+        width: 100%;
+        margin-left: 0;
+        gap: 1rem;
+    }
+
+    .admin-page {
+        padding: 2rem 0 4rem;
+    }
+
+    .admin-page-title {
+        font-size: 2rem;
+    }
+
+    .admin-form-panel {
+        padding: 2rem 1.5rem;
+    }
+
+    .admin-form-grid {
+        grid-template-columns: 1fr;
+    }
+}
