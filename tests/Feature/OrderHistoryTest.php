@@ -67,16 +67,19 @@ class OrderHistoryTest extends TestCase
             'quantity' => $quantity,
         ]);
 
+        // Visita el checkout (como un usuario real) para que se genere el
+        // token anti doble-envío que exige checkout.store.
+        $this->get(route('checkout.index'));
+        $checkoutToken = session('checkout.token');
+
         $this->post(route('checkout.store'), [
             'shipping_name' => $user->name,
             'shipping_email' => $user->email,
             'shipping_phone' => '6019-0694',
             'shipping_address' => 'San José, Costa Rica',
             'payment_method' => 'card',
-            'card_holder' => $user->name,
-            'card_number' => '4111111111111111',
-            'card_expiry' => '12/29',
-            'card_cvv' => '123',
+            'payment_method_nonce' => 'fake-valid-visa-nonce',
+            'checkout_token' => $checkoutToken,
         ]);
 
         return Order::latest()->first();

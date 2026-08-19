@@ -35,4 +35,16 @@ return [
         ],
     ],
 
+    'braintree' => [
+        // SOLO sandbox: nunca cambiar a 'production' en este proyecto.
+        'environment' => env('BRAINTREE_ENV', 'sandbox'),
+        'merchant_id' => env('BRAINTREE_MERCHANT_ID'),
+        'public_key' => env('BRAINTREE_PUBLIC_KEY'),
+        'private_key' => env('BRAINTREE_PRIVATE_KEY'),
+        // Opcional: solo si el sandbox tiene un merchant account adicional
+        // configurado para colones (CRC). Si se deja vacío, Braintree usa
+        // el merchant account por defecto de la cuenta sandbox.
+        'merchant_account_id_crc' => env('BRAINTREE_MERCHANT_ACCOUNT_ID_CRC'),
+    ],
+
 ];

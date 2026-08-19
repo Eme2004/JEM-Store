@@ -21,6 +21,9 @@
         <span class="account-detail-label">Método de pago</span>
         <span class="account-detail-value">
             {{ $order->payment_method_label }} ({{ $order->payment_status_label }})
+            @if ($order->card_display)
+                · {{ $order->card_display }}
+            @endif
         </span>
     </div>
 
@@ -40,6 +43,47 @@
     </div>
 
 </div>
+
+
+@if (str_starts_with((string) $order->payment_gateway, 'braintree'))
+    <div class="payment-gateway-panel">
+
+        <h3 class="payment-gateway-panel__title">
+            Detalle de la transacción
+        </h3>
+
+        <div class="account-details">
+
+            <div class="account-detail">
+                <span class="account-detail-label">Pasarela</span>
+                <span class="account-detail-value">Braintree</span>
+            </div>
+
+            <div class="account-detail">
+                <span class="account-detail-label">Entorno</span>
+                <span class="account-detail-value">{{ strtoupper($order->payment_environment) }}</span>
+            </div>
+
+            <div class="account-detail">
+                <span class="account-detail-label">Estado</span>
+                <span class="account-detail-value">{{ strtoupper($order->payment_status_label) }}</span>
+            </div>
+
+            @if ($order->transaction_id)
+                <div class="account-detail">
+                    <span class="account-detail-label">Transaction ID</span>
+                    <span class="account-detail-value">{{ $order->transaction_id }}</span>
+                </div>
+            @endif
+
+        </div>
+
+        <p class="payment-gateway-panel__notice">
+            ⚠ Transacción de prueba — No se procesó dinero real
+        </p>
+
+    </div>
+@endif
 
 
 <div class="checkout-success-items">

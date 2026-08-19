@@ -154,6 +154,60 @@ body {
     box-shadow: 0 0 0 1px $jem-ink;
 }
 
+.braintree-hosted-field {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.braintree-hosted-field iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.braintree-hosted-fields-focused {
+    border-color: $jem-ink;
+    box-shadow: 0 0 0 1px $jem-ink;
+}
+
+.payment-gateway-panel {
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    border: 1px solid $jem-stone;
+    background-color: $jem-porcelain;
+}
+
+.payment-gateway-panel__title {
+    margin-bottom: 1rem;
+    color: $jem-obsidian;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.04rem;
+    text-transform: uppercase;
+}
+
+.payment-gateway-panel__notice {
+    margin: 1.25rem 0 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid $jem-stone;
+    color: $jem-merlot;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.checkout-sandbox-badge {
+    display: inline-block;
+    margin-bottom: 1.25rem;
+    padding: 0.4rem 0.75rem;
+    background-color: $jem-sky;
+    color: $jem-obsidian;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04rem;
+    text-transform: uppercase;
+}
+
 .auth-small-text {
     font-size: 0.85rem;
 }
@@ -2660,6 +2714,11 @@ body {
 .checkout-card-fields {
     padding-top: 1.5rem;
     border-top: 1px solid $jem-stone;
+}
+
+.checkout-payment-option-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
 }
 
 .checkout-summary-items {
