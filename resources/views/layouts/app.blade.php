@@ -670,7 +670,7 @@
                                 </span>
 
                                 <span>
-                                    San José, Costa Rica
+                                    La Legua, Porvenir, Alajuela, Costa Rica
                                 </span>
                             </div>
 
@@ -721,7 +721,7 @@
                         </p>
 
                         <p class="mb-0">
-                            San José, Costa Rica
+                            La Legua, Porvenir, Alajuela, Costa Rica
                         </p>
                     </div>
 
