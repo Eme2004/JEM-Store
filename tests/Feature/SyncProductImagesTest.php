@@ -107,6 +107,25 @@ class SyncProductImagesTest extends TestCase
         $this->assertTrue($fresh->active);
     }
 
+    public function test_it_does_not_overwrite_an_image_uploaded_from_the_admin_panel(): void
+    {
+        Storage::fake('public');
+        // El archivo curado del catálogo SÍ existe...
+        Storage::disk('public')->put('products/jem-test-shirt.webp', 'catalogo');
+        // ...pero el producto ya tiene una foto subida manualmente desde el admin.
+        Storage::disk('public')->put('products/uploads/foto-admin.jpg', 'admin');
+
+        $product = $this->createProduct([
+            'image' => 'products/uploads/foto-admin.jpg',
+        ]);
+
+        $this->artisan('products:sync-images')
+            ->expectsOutputToContain('[SKIP] jem-test-shirt -> imagen gestionada manualmente, no se modifica')
+            ->assertExitCode(0);
+
+        $this->assertSame('products/uploads/foto-admin.jpg', $product->fresh()->image);
+    }
+
     public function test_it_syncs_multiple_products_independently(): void
     {
         Storage::fake('public');

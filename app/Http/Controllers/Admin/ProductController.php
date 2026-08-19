@@ -6,10 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
+    /**
+     * Carpeta donde se guardan las fotos subidas desde el panel admin.
+     * Separada de storage/app/public/products/{slug}.ext (catálogo curado
+     * versionado en Git) para que products:sync-images y los deploys nunca
+     * la toquen ni sobrescriban lo que un administrador subió a mano.
+     */
+    private const UPLOAD_DIR = 'products/uploads';
+
     public function index()
     {
         $products = Product::with('category')
@@ -32,9 +41,10 @@ class ProductController extends Controller
 
         $data['slug'] = $this->uniqueSlug($data['name']);
         $data['active'] = $request->boolean('active');
+        unset($data['remove_image']);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('products', 'public');
+            $data['image'] = $request->file('image')->store(self::UPLOAD_DIR, 'public');
         }
 
         Product::create($data);
@@ -54,11 +64,17 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $data = $this->validateProduct($request, $product);
+        $removeImage = ! empty($data['remove_image']);
+        unset($data['remove_image']);
 
         $data['active'] = $request->boolean('active');
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('products', 'public');
+            $this->deleteUploadedImage($product->image);
+            $data['image'] = $request->file('image')->store(self::UPLOAD_DIR, 'public');
+        } elseif ($removeImage) {
+            $this->deleteUploadedImage($product->image);
+            $data['image'] = null;
         }
 
         $product->update($data);
@@ -70,6 +86,8 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        $this->deleteUploadedImage($product->image);
+
         $product->delete();
 
         return redirect()
@@ -87,8 +105,21 @@ class ProductController extends Controller
             'sale_price' => ['nullable', 'numeric', 'min:0', 'lt:price'],
             'stock' => ['required', 'integer', 'min:0'],
             'audience' => ['required', 'in:hombre,mujer,unisex'],
-            'image' => ['nullable', 'image', 'max:4096'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png,webp', 'max:4096'],
+            'remove_image' => ['nullable', 'boolean'],
         ]);
+    }
+
+    /**
+     * Solo borra el archivo si vive bajo products/uploads/: nunca toca las
+     * imágenes curadas de storage/app/public/products/{slug}.ext versionadas
+     * en Git.
+     */
+    private function deleteUploadedImage(?string $path): void
+    {
+        if ($path && Str::startsWith($path, self::UPLOAD_DIR.'/')) {
+            Storage::disk('public')->delete($path);
+        }
     }
 
     private function uniqueSlug(string $name): string

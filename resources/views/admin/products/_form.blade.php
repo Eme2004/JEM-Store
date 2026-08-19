@@ -121,17 +121,84 @@
         Foto del producto
     </label>
 
+    <div class="admin-form-image-preview {{ (! empty($product) && $product->image) ? '' : 'admin-form-image-preview-empty' }}"
+        id="imagePreviewWrap">
+        <img id="imagePreview"
+            src="{{ (! empty($product) && $product->image) ? asset('storage/' . $product->image) : '' }}"
+            alt="{{ $product->name ?? 'Vista previa' }}"
+            style="{{ (! empty($product) && $product->image) ? '' : 'display:none;' }}">
+
+        <span class="account-orders-text mb-0" id="imagePreviewEmptyText"
+            style="{{ (! empty($product) && $product->image) ? 'display:none;' : '' }}">
+            Sin foto todavía.
+        </span>
+    </div>
+
+    <input id="image" type="file" name="image" accept="image/jpeg,image/jpg,image/png,image/webp"
+        class="form-control auth-input mt-2">
+
+    <span class="account-orders-text d-block mt-1">
+        JPG, PNG o WEBP, máximo 4&nbsp;MB.
+    </span>
+
     @if (! empty($product) && $product->image)
-        <div class="admin-form-current-image">
-            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
-            <span class="account-orders-text mb-0">
-                Imagen actual. Subí una nueva para reemplazarla.
-            </span>
+        <div class="form-check mt-2">
+            <input id="remove_image" type="checkbox" name="remove_image" value="1" class="form-check-input">
+
+            <label for="remove_image" class="form-check-label auth-label mb-0">
+                Quitar la foto actual (sin subir una nueva)
+            </label>
         </div>
     @endif
-
-    <input id="image" type="file" name="image" accept="image/*" class="form-control auth-input">
 </div>
+
+@once
+    @push('scripts')
+        <script>
+            document.getElementById('image')?.addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                const img = document.getElementById('imagePreview');
+                const emptyText = document.getElementById('imagePreviewEmptyText');
+                const removeCheckbox = document.getElementById('remove_image');
+
+                if (! file) {
+                    return;
+                }
+
+                if (removeCheckbox) {
+                    removeCheckbox.checked = false;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    img.src = e.target.result;
+                    img.style.display = '';
+                    if (emptyText) {
+                        emptyText.style.display = 'none';
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+
+            document.getElementById('remove_image')?.addEventListener('change', function (event) {
+                const img = document.getElementById('imagePreview');
+                const emptyText = document.getElementById('imagePreviewEmptyText');
+
+                if (event.target.checked) {
+                    img.style.display = 'none';
+                    if (emptyText) {
+                        emptyText.style.display = '';
+                    }
+                } else {
+                    img.style.display = '';
+                    if (emptyText) {
+                        emptyText.style.display = 'none';
+                    }
+                }
+            });
+        </script>
+    @endpush
+@endonce
 
 <div class="admin-form-actions">
     <button type="submit" class="btn btn-dark account-button">
