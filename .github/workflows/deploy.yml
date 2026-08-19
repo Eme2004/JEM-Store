@@ -1,4 +1,4 @@
-name: Deploy a InfinityFree
+name: Deploy a alwaysdata
 
 on:
   push:
@@ -6,8 +6,13 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: deploy-infinityfree
+  group: deploy-alwaysdata
   cancel-in-progress: false
+
+env:
+  ALWAYSDATA_HOST: ${{ vars.ALWAYSDATA_HOST || 'ssh-jemstore.alwaysdata.net' }}
+  ALWAYSDATA_USER: ${{ vars.ALWAYSDATA_USER || 'jemstore' }}
+  ALWAYSDATA_PATH: /home/jemstore/JEM-Store
 
 jobs:
   test-and-deploy:
@@ -62,25 +67,64 @@ jobs:
       - name: Reinstalar dependencias de Composer solo para producción
         run: composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader
 
-      - name: Desplegar por FTP a InfinityFree
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          server-dir: /htdocs/
-          # dangerous-clean-slate se deja en false (valor por defecto):
-          # el action solo sube archivos nuevos/cambiados y NUNCA borra
-          # nada que ya exista en el servidor. Es lo que evita que se
-          # pise database.sqlite o las imágenes subidas a mano.
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-            **/node_modules/**
-            **/tests/**
-            **/.env
-            **/database/database.sqlite
-            **/storage/app/public/**
-            **/public/storage/**
+      - name: Preparar clave SSH
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "${{ secrets.ALWAYSDATA_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+      - name: Fijar el host key de alwaysdata (evita MITM)
+        run: |
+          cat > ~/.ssh/known_hosts <<'EOF'
+          ssh-jemstore.alwaysdata.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILFC808n0lKFAA1QsutTFWO+pNyuUo7I1FlCqLn60uO2
+          ssh-jemstore.alwaysdata.net ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCI1EEZdp7LcHAy9oHGcCH4BoefEC5q0pwUEjD9+MUs/qNjpFAK1T3nd/eNp6LrrIo2+TkCtDf6Ru52mvE66cAw6oiZLqwS0uGemuePTWFqknqFOFEufLyp6Sm5onFMR1eJmsZtsONUwYREyYfAQiALrg0TXMXhnCe2XN3qS75g6xFHvXqzDqCJhOwciy7C5Tx3qo/qDFw3w2KkrucgfEmAyjfBn7fkJ4QMBWoR7XbzAgD+eKBwegMxeC9kZMJzo8yLFpWmh2tojUsgkBKUNzMRKG8JJHyY9bEj9SneddnI0iySFFww+VF6HHhcCbK6b0MMntExlnVwJM6nsF/axAv9X8xgCsyCIDTNORNK7pUGACvWYmKJPga2Di+y/ajB2HlXSMtzwozPs3Go+ABWSplVjB+/bz5BzaUuuS2GSl1qdpbS1Lt4Is+MrxOigz1T/jFSkWbr8Y88NfrVvVC7pDk9ikzpa/VAL0kJiel/FFLTifuOXV9wry09qaYmTwZt9b8=
+          EOF
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Crear carpetas de storage en el servidor (si no existen)
+        run: |
+          ssh -i ~/.ssh/deploy_key "${ALWAYSDATA_USER}@${ALWAYSDATA_HOST}" \
+            "mkdir -p ${ALWAYSDATA_PATH}/storage/app/public/products \
+                      ${ALWAYSDATA_PATH}/storage/framework/cache/data \
+                      ${ALWAYSDATA_PATH}/storage/framework/sessions \
+                      ${ALWAYSDATA_PATH}/storage/framework/views \
+                      ${ALWAYSDATA_PATH}/storage/framework/testing \
+                      ${ALWAYSDATA_PATH}/storage/logs \
+                      ${ALWAYSDATA_PATH}/bootstrap/cache"
+
+      - name: Desplegar por rsync/SSH a alwaysdata
+        run: |
+          rsync -az --checksum \
+            -e "ssh -i ~/.ssh/deploy_key" \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.env' \
+            --exclude='.env.*' \
+            --exclude='node_modules' \
+            --exclude='tests' \
+            --exclude='deploy' \
+            --exclude='database/database.sqlite' \
+            --exclude='storage/logs/*' \
+            --exclude='storage/framework/cache/*' \
+            --exclude='storage/framework/sessions/*' \
+            --exclude='storage/framework/views/*' \
+            --exclude='public/storage' \
+            --exclude='public/hot' \
+            ./ "${ALWAYSDATA_USER}@${ALWAYSDATA_HOST}:${ALWAYSDATA_PATH}/"
+
+      - name: Comandos post-deploy (migraciones, storage link, imágenes, cachés)
+        run: |
+          ssh -i ~/.ssh/deploy_key "${ALWAYSDATA_USER}@${ALWAYSDATA_HOST}" '
+            set -e
+            cd '"${ALWAYSDATA_PATH}"'
+            php artisan migrate --force
+            php artisan storage:link || true
+            php artisan products:sync-images
+            php artisan optimize:clear
+            php artisan optimize
+          '
+
+      - name: Limpiar clave SSH temporal del runner
+        if: always()
+        run: rm -f ~/.ssh/deploy_key

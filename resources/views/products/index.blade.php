@@ -133,7 +133,8 @@
 
                             <a href="{{ route('products.show', $product) }}" class="product-card-image">
                                 @if ($product->image)
-                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                                        loading="lazy">
                                 @else
                                     <div class="product-placeholder">
                                         <span>JEM</span>
