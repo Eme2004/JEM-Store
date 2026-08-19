@@ -33,9 +33,8 @@
 
                 <div class="col-12 col-lg-5 mt-5 mt-lg-0">
                     <div class="jem-home-hero__visual">
-                        <span class="jem-home-hero__visual-label">
-                            JEM
-                        </span>
+                        <img src="{{ asset('images/home/hero-campaign.webp') }}"
+                            alt="Nueva colección JEM Store" class="jem-home-hero__visual-img">
 
                         <div class="jem-home-hero__visual-copy">
                             <span>FORM</span>
