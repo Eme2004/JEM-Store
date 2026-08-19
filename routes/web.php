@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
@@ -102,5 +103,32 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/reportes/pdf', [ReportController::class, 'pdf'])
         ->name('reports.pdf');
+
+
+    // --------------------------------------------------
+    // Panel de administración
+    // --------------------------------------------------
+
+    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
+
+        Route::get('/productos', [AdminProductController::class, 'index'])
+            ->name('products.index');
+
+        Route::get('/productos/crear', [AdminProductController::class, 'create'])
+            ->name('products.create');
+
+        Route::post('/productos', [AdminProductController::class, 'store'])
+            ->name('products.store');
+
+        Route::get('/productos/{product}/editar', [AdminProductController::class, 'edit'])
+            ->name('products.edit');
+
+        Route::put('/productos/{product}', [AdminProductController::class, 'update'])
+            ->name('products.update');
+
+        Route::delete('/productos/{product}', [AdminProductController::class, 'destroy'])
+            ->name('products.destroy');
+
+    });
 
 });

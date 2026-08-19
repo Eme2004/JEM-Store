@@ -9,11 +9,16 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected $redirectTo = '/';
-
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+    }
+
+    protected function redirectTo()
+    {
+        return $this->guard()->user()?->is_admin
+            ? route('admin.products.index')
+            : '/';
     }
 }
