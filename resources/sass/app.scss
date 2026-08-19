@@ -115,12 +115,9 @@ body {
     background-color: $jem-sky;
 }
 
-.auth-brand {
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.25rem;
-    text-transform: uppercase;
-    color: $jem-merlot;
+.auth-brand-img {
+    height: 40px;
+    width: auto;
 }
 
 .auth-title {
@@ -481,16 +478,20 @@ body {
 }
 
 .jem-logo {
+    display: inline-flex;
+    align-items: center;
     margin-right: 2rem;
-    color: $jem-obsidian;
-    font-size: 1.65rem;
-    font-weight: 700;
-    letter-spacing: 0.12rem;
     line-height: 1;
 }
 
-.jem-logo:hover {
-    color: $jem-ink;
+.jem-logo-img {
+    height: 42px;
+    width: auto;
+    transition: opacity 0.2s ease;
+}
+
+.jem-logo:hover .jem-logo-img {
+    opacity: 0.8;
 }
 
 .jem-main-nav {
@@ -1996,15 +1997,17 @@ body {
 .jem-footer-logo {
     display: inline-block;
     margin-bottom: 1.5rem;
-    color: $jem-white;
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: 0.18rem;
     text-decoration: none;
 }
 
-.jem-footer-logo:hover {
-    color: $jem-sky;
+.jem-footer-logo-img {
+    height: 64px;
+    width: auto;
+    transition: opacity 0.2s ease;
+}
+
+.jem-footer-logo:hover .jem-footer-logo-img {
+    opacity: 0.8;
 }
 
 .jem-footer-description {

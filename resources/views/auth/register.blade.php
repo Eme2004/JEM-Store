@@ -8,7 +8,7 @@
 
                 <div class="auth-card">
                     <div class="text-center mb-5">
-                        <p class="auth-brand mb-3">JEM</p>
+                        <img src="{{ asset('images/logo/jem-mark.webp') }}" alt="JEM Store" class="auth-brand-img mb-3">
 
                         <h1 class="auth-title">
                             Crear cuenta
