@@ -31,7 +31,10 @@ Cada URL "Original" fue verificada mediante fetch real de la página antes de de
 
 ## Pendientes
 
-Ninguno — se encontraron y descargaron fotografías reales verificadas para los 22 productos del catálogo.
+- **jem-meridian-jacket** (JEM Meridian Jacket) — el usuario subirá la imagen manualmente vía el modo administrador.
+- **jem-form-bag** (JEM Form Bag) — el usuario subirá la imagen manualmente vía el modo administrador.
+
+El resto de los 22 productos ya tenían fotografías reales verificadas descargadas y documentadas antes de que estos dos productos se agregaran a `ProductSeeder`.
 
 ## Notas de procesamiento
 
