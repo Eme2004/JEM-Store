@@ -21,7 +21,12 @@ class Order extends Model
         'shipping',
         'total',
         'payment_method',
+        'payment_gateway',
+        'payment_environment',
         'payment_status',
+        'transaction_id',
+        'card_brand',
+        'card_last4',
         'status',
         'shipping_name',
         'shipping_email',
@@ -74,6 +79,17 @@ class Order extends Model
             'pending' => 'Pendiente',
             'failed' => 'Fallido',
             default => $this->payment_status,
+        });
+    }
+
+    protected function cardDisplay(): Attribute
+    {
+        return Attribute::get(function () {
+            if (! $this->card_brand || ! $this->card_last4) {
+                return null;
+            }
+
+            return "{$this->card_brand} •••• {$this->card_last4}";
         });
     }
 }

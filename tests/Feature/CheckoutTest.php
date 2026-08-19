@@ -53,6 +53,18 @@ class CheckoutTest extends TestCase
         ]);
     }
 
+    /**
+     * Visita el checkout (como haría un usuario real) para que el
+     * controlador genere y guarde en sesión el token anti doble-envío, y
+     * lo devuelve para usarlo en el POST de la prueba.
+     */
+    private function checkoutToken(): ?string
+    {
+        $this->get(route('checkout.index'));
+
+        return session('checkout.token');
+    }
+
     private function validShippingData(array $overrides = []): array
     {
         return array_merge([
@@ -61,10 +73,7 @@ class CheckoutTest extends TestCase
             'shipping_phone' => '6019-0694',
             'shipping_address' => 'San José, Costa Rica',
             'payment_method' => 'card',
-            'card_holder' => 'Jean Perez',
-            'card_number' => '4111111111111111',
-            'card_expiry' => '12/29',
-            'card_cvv' => '123',
+            'payment_method_nonce' => 'fake-valid-visa-nonce',
         ], $overrides);
     }
 
@@ -128,6 +137,20 @@ class CheckoutTest extends TestCase
         $response->assertViewHas('shipping', 0.0);
     }
 
+    public function test_checkout_index_exposes_braintree_client_token(): void
+    {
+        $user = User::factory()->create();
+        $product = $this->createProduct();
+
+        $this->actingAs($user);
+        $this->addToCart($product, 1);
+
+        $response = $this->get(route('checkout.index'));
+
+        $response->assertViewHas('braintreeClientToken');
+        $response->assertViewHas('checkoutToken');
+    }
+
     public function test_checkout_creates_an_order(): void
     {
         $user = User::factory()->create();
@@ -136,7 +159,10 @@ class CheckoutTest extends TestCase
         $this->actingAs($user);
         $this->addToCart($product, 2);
 
-        $response = $this->post(route('checkout.store'), $this->validShippingData());
+        $token = $this->checkoutToken();
+        $response = $this->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => $token,
+        ]));
 
         $order = Order::first();
 
@@ -149,6 +175,93 @@ class CheckoutTest extends TestCase
         $this->assertEquals('paid', $order->payment_status);
     }
 
+    public function test_checkout_stores_gateway_transaction_details_for_card_payments(): void
+    {
+        $user = User::factory()->create();
+        $product = $this->createProduct(['price' => 10000, 'stock' => 5]);
+
+        $this->actingAs($user);
+        $this->addToCart($product, 1);
+
+        $token = $this->checkoutToken();
+        $this->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => $token,
+        ]));
+
+        $order = Order::first();
+
+        $this->assertNotNull($order);
+        $this->assertStringStartsWith('braintree', $order->payment_gateway);
+        $this->assertEquals('sandbox', $order->payment_environment);
+        $this->assertNotEmpty($order->transaction_id);
+        $this->assertEquals('Visa', $order->card_brand);
+        $this->assertEquals('1111', $order->card_last4);
+    }
+
+    public function test_checkout_rejects_a_declined_card_and_creates_no_order(): void
+    {
+        $user = User::factory()->create();
+        $product = $this->createProduct(['stock' => 5]);
+
+        $this->actingAs($user);
+        $this->addToCart($product, 1);
+
+        $token = $this->checkoutToken();
+        $response = $this->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => $token,
+            'payment_method_nonce' => 'fake-processor-declined-visa-nonce',
+        ]));
+
+        $response->assertRedirect(route('checkout.index'));
+        $response->assertSessionHas('error');
+        $this->assertDatabaseCount('orders', 0);
+        $this->assertEquals(5, $product->fresh()->stock);
+    }
+
+    public function test_checkout_prevents_double_submit_with_the_same_token(): void
+    {
+        $user = User::factory()->create();
+        $product = $this->createProduct(['stock' => 5]);
+
+        $this->actingAs($user);
+        $this->addToCart($product, 1);
+
+        $token = $this->checkoutToken();
+
+        $first = $this->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => $token,
+        ]));
+        $first->assertSessionHas('status');
+
+        // Reenviar exactamente el mismo formulario (doble clic / doble POST).
+        $this->addToCart($product, 1);
+        $second = $this->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => $token,
+        ]));
+
+        $second->assertRedirect(route('cart.index'));
+        $second->assertSessionHas('error');
+        $this->assertDatabaseCount('orders', 1);
+    }
+
+    public function test_checkout_rejects_a_missing_or_invalid_token(): void
+    {
+        $user = User::factory()->create();
+        $product = $this->createProduct();
+
+        $this->actingAs($user);
+        $this->addToCart($product, 1);
+        $this->checkoutToken();
+
+        $response = $this->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => 'token-invalido',
+        ]));
+
+        $response->assertRedirect(route('cart.index'));
+        $response->assertSessionHas('error');
+        $this->assertDatabaseCount('orders', 0);
+    }
+
     public function test_checkout_creates_order_items(): void
     {
         $user = User::factory()->create();
@@ -157,7 +270,10 @@ class CheckoutTest extends TestCase
         $this->actingAs($user);
         $this->addToCart($product, 2);
 
-        $this->post(route('checkout.store'), $this->validShippingData());
+        $token = $this->checkoutToken();
+        $this->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => $token,
+        ]));
 
         $order = Order::first();
 
@@ -179,7 +295,10 @@ class CheckoutTest extends TestCase
         $this->actingAs($user);
         $this->addToCart($product, 3);
 
-        $this->post(route('checkout.store'), $this->validShippingData());
+        $token = $this->checkoutToken();
+        $this->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => $token,
+        ]));
 
         $this->assertEquals(2, $product->fresh()->stock);
     }
@@ -192,7 +311,10 @@ class CheckoutTest extends TestCase
         $this->actingAs($user);
         $this->addToCart($product, 1);
 
-        $this->post(route('checkout.store'), $this->validShippingData());
+        $token = $this->checkoutToken();
+        $this->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => $token,
+        ]));
 
         $order = Order::first();
 
@@ -210,7 +332,10 @@ class CheckoutTest extends TestCase
         $this->actingAs($user);
         $this->addToCart($product, 1);
 
-        $this->post(route('checkout.store'), $this->validShippingData());
+        $token = $this->checkoutToken();
+        $this->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => $token,
+        ]));
 
         $this->assertEmpty(session('cart', []));
     }
@@ -223,21 +348,28 @@ class CheckoutTest extends TestCase
         $this->actingAs($user);
         $this->addToCart($product, 1);
 
-        $this->post(route('checkout.store'), $this->validShippingData());
+        $token = $this->checkoutToken();
+        $this->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => $token,
+        ]));
 
         $columns = \Illuminate\Support\Facades\Schema::getColumnListing('orders');
 
         $this->assertNotContains('card_number', $columns);
         $this->assertNotContains('card_cvv', $columns);
         $this->assertNotContains('card_expiry', $columns);
+        $this->assertNotContains('payment_method_nonce', $columns);
     }
 
     public function test_checkout_fails_with_empty_cart(): void
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
-            ->post(route('checkout.store'), $this->validShippingData());
+        // El carrito está vacío: el controlador lo rechaza antes de
+        // siquiera revisar el token de doble-envío.
+        $response = $this->actingAs($user)->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => 'cualquier-token',
+        ]));
 
         $response->assertRedirect(route('cart.index'));
         $response->assertSessionHas('error');
@@ -252,18 +384,23 @@ class CheckoutTest extends TestCase
         $this->actingAs($user);
         $this->addToCart($product, 2);
 
-        // El stock baja después de agregarlo al carrito.
+        // El token se obtiene mientras el stock todavía alcanza (así como
+        // un usuario real vería la página de checkout antes de que otro
+        // comprador agote el stock); el stock baja recién después.
+        $token = $this->checkoutToken();
         $product->update(['stock' => 1]);
 
-        $response = $this->post(route('checkout.store'), $this->validShippingData());
+        $response = $this->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => $token,
+        ]));
 
-        $response->assertRedirect(route('cart.index'));
+        $response->assertRedirect(route('checkout.index'));
         $response->assertSessionHas('error');
         $this->assertDatabaseCount('orders', 0);
         $this->assertEquals(1, $product->fresh()->stock);
     }
 
-    public function test_checkout_requires_card_fields_when_paying_with_card(): void
+    public function test_checkout_requires_nonce_when_paying_with_card(): void
     {
         $user = User::factory()->create();
         $product = $this->createProduct();
@@ -271,15 +408,17 @@ class CheckoutTest extends TestCase
         $this->actingAs($user);
         $this->addToCart($product, 1);
 
+        $token = $this->checkoutToken();
         $response = $this->post(route('checkout.store'), $this->validShippingData([
-            'card_number' => null,
+            'checkout_token' => $token,
+            'payment_method_nonce' => null,
         ]));
 
-        $response->assertSessionHasErrors('card_number');
+        $response->assertSessionHasErrors('payment_method_nonce');
         $this->assertDatabaseCount('orders', 0);
     }
 
-    public function test_checkout_accepts_paypal_without_card_fields(): void
+    public function test_checkout_accepts_paypal_without_a_card_nonce(): void
     {
         $user = User::factory()->create();
         $product = $this->createProduct();
@@ -287,12 +426,11 @@ class CheckoutTest extends TestCase
         $this->actingAs($user);
         $this->addToCart($product, 1);
 
+        $token = $this->checkoutToken();
         $response = $this->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => $token,
             'payment_method' => 'paypal',
-            'card_holder' => null,
-            'card_number' => null,
-            'card_expiry' => null,
-            'card_cvv' => null,
+            'payment_method_nonce' => null,
         ]));
 
         $order = Order::first();
@@ -300,6 +438,7 @@ class CheckoutTest extends TestCase
         $this->assertNotNull($order);
         $response->assertRedirect(route('checkout.success', $order));
         $this->assertEquals('paypal', $order->payment_method);
+        $this->assertEquals('simulated', $order->payment_gateway);
     }
 
     public function test_success_page_requires_authentication(): void
@@ -309,7 +448,10 @@ class CheckoutTest extends TestCase
 
         $this->actingAs($user);
         $this->addToCart($product, 1);
-        $this->post(route('checkout.store'), $this->validShippingData());
+        $token = $this->checkoutToken();
+        $this->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => $token,
+        ]));
 
         $order = Order::first();
         $this->post(route('logout'));
@@ -327,7 +469,10 @@ class CheckoutTest extends TestCase
 
         $this->actingAs($owner);
         $this->addToCart($product, 1);
-        $this->post(route('checkout.store'), $this->validShippingData());
+        $token = $this->checkoutToken();
+        $this->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => $token,
+        ]));
 
         $order = Order::first();
 
@@ -344,7 +489,10 @@ class CheckoutTest extends TestCase
 
         $this->actingAs($user);
         $this->addToCart($product, 1);
-        $this->post(route('checkout.store'), $this->validShippingData());
+        $token = $this->checkoutToken();
+        $this->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => $token,
+        ]));
 
         $order = Order::first();
 
@@ -354,5 +502,28 @@ class CheckoutTest extends TestCase
         $response->assertSee($order->order_number);
         $response->assertSee($order->tracking_number);
         $response->assertSee('JEM Special Tee');
+    }
+
+    public function test_success_page_shows_braintree_sandbox_transaction_details(): void
+    {
+        $user = User::factory()->create();
+        $product = $this->createProduct();
+
+        $this->actingAs($user);
+        $this->addToCart($product, 1);
+        $token = $this->checkoutToken();
+        $this->post(route('checkout.store'), $this->validShippingData([
+            'checkout_token' => $token,
+        ]));
+
+        $order = Order::first();
+
+        $response = $this->get(route('checkout.success', $order));
+
+        $response->assertOk();
+        $response->assertSee('Braintree');
+        $response->assertSee('SANDBOX');
+        $response->assertSee($order->transaction_id);
+        $response->assertSee('No se procesó dinero real');
     }
 }

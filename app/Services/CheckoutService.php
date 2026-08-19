@@ -6,27 +6,36 @@ use App\Exceptions\CheckoutException;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use App\Services\Payments\PaymentGatewayContract;
+use App\Services\Payments\PaymentResult;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class CheckoutService
 {
-    public function __construct(private CartService $cart)
-    {
+    public function __construct(
+        private CartService $cart,
+        private PaymentGatewayContract $gateway
+    ) {
     }
 
     /**
-     * Procesa la compra dentro de una transacción: bloquea y revalida stock,
-     * crea la orden y sus líneas, descuenta inventario y vacía el carrito.
-     * Si algo falla, Laravel revierte automáticamente la transacción y no
-     * queda ninguna orden ni descuento de stock a medias.
+     * Procesa la compra: cobra con la pasarela (fuera de la transacción de
+     * base de datos, para no retener locks durante una llamada de red) y
+     * solo si el pago es aprobado, dentro de una transacción, bloquea y
+     * revalida stock, crea la orden y sus líneas, descuenta inventario y
+     * vacía el carrito. Si algo falla, Laravel revierte automáticamente la
+     * transacción y no queda ninguna orden ni descuento de stock a medias.
      */
     public function process(User $user, array $shipping): Order
     {
         $items = $this->linesToPurchase();
+        $total = $this->cart->total($items);
 
-        return DB::transaction(function () use ($user, $shipping, $items) {
+        $payment = $this->charge($shipping, $total);
+
+        return DB::transaction(function () use ($user, $shipping, $items, $payment) {
             foreach ($items as $item) {
                 $product = Product::whereKey($item['product']->id)
                     ->lockForUpdate()
@@ -56,7 +65,12 @@ class CheckoutService
                 'shipping' => $this->cart->shipping($items),
                 'total' => $this->cart->total($items),
                 'payment_method' => $shipping['payment_method'],
+                'payment_gateway' => $payment->gateway,
+                'payment_environment' => $payment->environment,
                 'payment_status' => 'paid',
+                'transaction_id' => $payment->transactionId,
+                'card_brand' => $payment->cardBrand,
+                'card_last4' => $payment->cardLast4,
                 'status' => 'processing',
                 'shipping_name' => $shipping['shipping_name'],
                 'shipping_email' => $shipping['shipping_email'],
@@ -78,6 +92,37 @@ class CheckoutService
 
             return $order;
         });
+    }
+
+    /**
+     * Cobra el pedido. Para "card" llama a Braintree Sandbox (o su
+     * equivalente simulado local) con el monto calculado en el servidor
+     * -nunca uno enviado por el cliente-. Para "paypal" se mantiene la
+     * confirmación simulada existente, sin llamar a ninguna pasarela real.
+     */
+    private function charge(array $shipping, float $total): PaymentResult
+    {
+        if ($shipping['payment_method'] !== 'card') {
+            return new PaymentResult(
+                approved: true,
+                gateway: 'simulated',
+                environment: 'sandbox',
+            );
+        }
+
+        $result = $this->gateway->sale(
+            $shipping['payment_method_nonce'],
+            $total,
+            ['merchant_account_id' => config('services.braintree.merchant_account_id_crc')]
+        );
+
+        if (! $result->approved) {
+            throw new CheckoutException(
+                $result->message ?? 'Tu tarjeta fue rechazada. Intenta con otra tarjeta.'
+            );
+        }
+
+        return $result;
     }
 
     /**

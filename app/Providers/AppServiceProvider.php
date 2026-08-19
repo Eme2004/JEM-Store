@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use App\Models\Category;
 use App\Services\CartService;
+use App\Services\Payments\BraintreeGatewayService;
+use App\Services\Payments\FakeSandboxGatewayService;
+use App\Services\Payments\PaymentGatewayContract;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -12,7 +15,20 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
+        $this->app->singleton(PaymentGatewayContract::class, function () {
+            $config = config('services.braintree');
+
+            // Sin credenciales configuradas todavía: se usa una pasarela
+            // simulada localmente equivalente para que el checkout y sus
+            // tests funcionen igual. En cuanto BRAINTREE_PRIVATE_KEY tenga
+            // un valor real (sandbox), esto cambia automáticamente al SDK
+            // real de Braintree sin tocar ningún otro código.
+            if (empty($config['merchant_id']) || empty($config['public_key']) || empty($config['private_key'])) {
+                return new FakeSandboxGatewayService();
+            }
+
+            return new BraintreeGatewayService($config);
+        });
     }
 
     public function boot(): void
