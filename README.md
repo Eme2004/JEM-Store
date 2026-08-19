@@ -1,3 +1,21 @@
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:161616,100:2e2e2e&height=180&section=header&text=JEM%20Store&fontSize=58&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Nothing%20is%20casual.&descAlignY=58&descSize=18&descColor=c4d8f0" alt="JEM Store" width="100%" />
+</p>
+
+<p align="center">
+  <a href="https://github.com/Eme2004/JEM-Store/actions/workflows/deploy.yml">
+    <img src="https://github.com/Eme2004/JEM-Store/actions/workflows/deploy.yml/badge.svg" alt="Deploy status" />
+  </a>
+  <img src="https://img.shields.io/badge/Laravel-12-FF2D20?logo=laravel&logoColor=white" alt="Laravel 12" />
+  <img src="https://img.shields.io/badge/PHP-%5E8.2-777BB4?logo=php&logoColor=white" alt="PHP ^8.2" />
+  <img src="https://img.shields.io/badge/tests-118%20passing-2ea44f" alt="118 tests passing" />
+  <img src="https://img.shields.io/badge/Pagos-Braintree%20Sandbox-0574EF" alt="Braintree Sandbox" />
+</p>
+
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com/?font=Georgia&size=18&pause=1500&color=161616&center=true&vCenter=true&width=560&lines=Cat%C3%A1logo+%C2%B7+Carrito+%C2%B7+Checkout+con+pago+real+(sandbox);Panel+de+administraci%C3%B3n+%C2%B7+Historial+de+pedidos;Reportes+de+ventas+en+PDF+%C2%B7+CI%2FCD+autom%C3%A1tico" alt="Typing SVG" />
+</p>
+
 # JEM Store
 
 Tienda de moda contemporánea construida con Laravel — catálogo, carrito, checkout con
@@ -129,3 +147,7 @@ Website & Branding — Emesis Mairena y Jairo Herrera.
 
 Fotografía de producto y del home: Unsplash / Pexels, uso libre. Fuentes documentadas en
 [`docs/PRODUCT_IMAGES.md`](docs/PRODUCT_IMAGES.md) y [`docs/HOME_IMAGES.md`](docs/HOME_IMAGES.md).
+
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:161616,100:2e2e2e&height=100&section=footer" alt="" width="100%" />
+</p>
