@@ -27,6 +27,20 @@ Route::get('/productos/{product:slug}', [ProductController::class, 'show'])
 
 
 // --------------------------------------------------
+// Páginas legales
+// --------------------------------------------------
+
+Route::view('/legal/disclaimer', 'legal.disclaimer')
+    ->name('legal.disclaimer');
+
+Route::view('/legal/terminos-de-uso', 'legal.terms')
+    ->name('legal.terms');
+
+Route::view('/legal/politica-de-privacidad', 'legal.privacy')
+    ->name('legal.privacy');
+
+
+// --------------------------------------------------
 // Carrito de compras
 // --------------------------------------------------
 

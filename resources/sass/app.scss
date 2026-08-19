@@ -1522,9 +1522,16 @@ body {
     justify-content: center;
     min-height: 500px;
     overflow: hidden;
-    background-color: $jem-sky;
+    background-color: $jem-stone;
 }
 
+.jem-home-hero__visual-img {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    object-fit: cover;
+    object-position: center 15%;
+}
 
 .jem-home-hero__visual::after {
     content: '';
@@ -1533,16 +1540,8 @@ body {
     left: 10%;
     width: 80px;
     height: 1px;
-    background-color: $jem-obsidian;
-}
-
-.jem-home-hero__visual-label {
-    color: $jem-obsidian;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(6rem, 12vw, 10rem);
-    font-weight: 600;
-    letter-spacing: -0.08em;
-    line-height: 1;
+    background-color: $jem-white;
+    opacity: 0.7;
 }
 
 .jem-home-hero__visual-copy {
@@ -1552,12 +1551,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    color: $jem-obsidian;
+    color: $jem-white;
     font-size: 0.62rem;
     font-weight: 700;
     letter-spacing: 0.1rem;
     line-height: 1.8;
     text-transform: uppercase;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
 }
 
 
@@ -1858,7 +1858,8 @@ body {
         padding: 5rem 0;
     }
 
-    .jem-home-hero__visual {
+    .jem-home-hero__visual,
+    .jem-home-hero__visual-img {
         min-height: 420px;
     }
 
@@ -1904,12 +1905,9 @@ body {
         width: 100%;
     }
 
-    .jem-home-hero__visual {
+    .jem-home-hero__visual,
+    .jem-home-hero__visual-img {
         min-height: 340px;
-    }
-
-    .jem-home-hero__visual-label {
-        font-size: 7rem;
     }
 
     .jem-home-section,
@@ -2072,6 +2070,28 @@ body {
     padding-top: 1.5rem;
     color: rgba(255, 255, 255, 0.5);
     font-size: 0.72rem;
+}
+
+.jem-footer-legal {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.68rem;
+    line-height: 1.6;
+}
+
+.jem-footer-legal a {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: underline;
+}
+
+.jem-footer-legal a:hover {
+    color: $jem-sky;
 }
 
 // --------------------------------------------------
@@ -3338,4 +3358,66 @@ body {
     .admin-form-grid {
         grid-template-columns: 1fr;
     }
+}
+
+
+// --------------------------------------------------
+// Páginas legales
+// --------------------------------------------------
+
+.legal-page {
+    padding: 4rem 0 6rem;
+    background-color: $jem-porcelain;
+}
+
+.legal-title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.legal-content {
+    max-width: 760px;
+    color: $jem-ash;
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.legal-content h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: $jem-obsidian;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.legal-content p {
+    margin-bottom: 1.25rem;
+}
+
+.legal-content ul {
+    margin-bottom: 1.25rem;
+    padding-left: 1.25rem;
+}
+
+.legal-content li {
+    margin-bottom: 0.6rem;
+}
+
+.legal-content a {
+    color: $jem-ink;
+    text-decoration: underline;
+}
+
+.legal-content code {
+    padding: 0.15rem 0.4rem;
+    background-color: $jem-stone;
+    color: $jem-obsidian;
+    font-size: 0.85em;
+}
+
+.legal-updated {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid $jem-stone;
+    color: $jem-ash;
+    font-size: 0.8rem;
 }

@@ -737,6 +737,20 @@
 
                 </div>
 
+
+                {{-- Línea legal --}}
+                <div class="jem-footer-legal">
+                    © Copyright {{ now()->year }} by JEM Store
+                    <span aria-hidden="true">|</span>
+                    <a href="{{ route('legal.disclaimer') }}">Disclaimer</a>
+                    <span aria-hidden="true">|</span>
+                    <a href="{{ route('legal.terms') }}">Terms of Use</a>
+                    <span aria-hidden="true">|</span>
+                    <a href="{{ route('legal.privacy') }}">Privacy Policy</a>
+                    <span aria-hidden="true">|</span>
+                    Website &amp; Branding by Emesis Mairena y Jairo Herrera
+                </div>
+
             </div>
         </footer>
     </div>
