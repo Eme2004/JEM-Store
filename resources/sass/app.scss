@@ -3473,6 +3473,50 @@ body {
     font-size: 0.85em;
 }
 
+// --------------------------------------------------
+// Aviso de cookies
+// --------------------------------------------------
+
+.jem-cookie-notice {
+    position: fixed;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 1050;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.1rem 1.4rem;
+    border-radius: 4px;
+    background-color: $jem-obsidian;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+}
+
+.jem-cookie-notice__text {
+    flex: 1 1 320px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.85rem;
+    line-height: 1.7;
+}
+
+.jem-cookie-notice__text a {
+    color: $jem-sky;
+    text-decoration: underline;
+}
+
+.jem-cookie-notice__button {
+    flex: 0 0 auto;
+    border-radius: 2px;
+    font-size: 0.78rem;
+    letter-spacing: 0.04rem;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
 .legal-updated {
     margin-top: 2.5rem;
     padding-top: 1.5rem;
