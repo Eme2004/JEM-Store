@@ -181,7 +181,7 @@
 
                                         @if ($recentProduct->image)
                                             <img src="{{ asset('storage/' . $recentProduct->image) }}"
-                                                alt="{{ $recentProduct->name }}">
+                                                alt="{{ $recentProduct->name }}" loading="lazy">
                                         @else
                                             <div class="product-placeholder">
                                                 <span>JEM</span>
