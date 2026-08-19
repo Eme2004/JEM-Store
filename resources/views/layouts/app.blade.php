@@ -9,6 +9,11 @@
 
     <title>{{ config('app.name', 'JEM Store') }}</title>
 
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
@@ -75,7 +80,7 @@
 
                     {{-- Logo --}}
                     <a class="navbar-brand jem-logo" href="{{ route('home') }}">
-                        JEM
+                        <img src="{{ asset('images/logo/jem-mark.webp') }}" alt="JEM Store" class="jem-logo-img">
                     </a>
 
 
@@ -506,7 +511,7 @@
                     <div class="col-12 col-lg-4">
 
                         <a href="{{ route('home') }}" class="jem-footer-logo">
-                            JEM
+                            <img src="{{ asset('images/logo/jem-logo-white.webp') }}" alt="JEM Store" class="jem-footer-logo-img">
                         </a>
 
                         <p class="jem-footer-description">
