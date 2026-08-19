@@ -85,7 +85,7 @@ jobs:
       - name: Crear carpetas de storage en el servidor (si no existen)
         run: |
           ssh -i ~/.ssh/deploy_key "${ALWAYSDATA_USER}@${ALWAYSDATA_HOST}" \
-            "mkdir -p ${ALWAYSDATA_PATH}/storage/app/public/products \
+            "mkdir -p ${ALWAYSDATA_PATH}/storage/app/public/products/uploads \
                       ${ALWAYSDATA_PATH}/storage/framework/cache/data \
                       ${ALWAYSDATA_PATH}/storage/framework/sessions \
                       ${ALWAYSDATA_PATH}/storage/framework/views \
@@ -105,6 +105,7 @@ jobs:
             --exclude='tests' \
             --exclude='deploy' \
             --exclude='database/database.sqlite' \
+            --exclude='storage/app/public/products/uploads/*' \
             --exclude='storage/logs/*' \
             --exclude='storage/framework/cache/*' \
             --exclude='storage/framework/sessions/*' \

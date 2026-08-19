@@ -19,7 +19,7 @@
             <div class="admin-topbar-row">
 
                 <a href="{{ route('admin.products.index') }}" class="jem-logo admin-topbar-logo">
-                    JEM
+                    <img src="{{ asset('images/logo/jem-mark.webp') }}" alt="JEM Store" class="jem-logo-img">
                 </a>
 
                 <span class="admin-topbar-label">
@@ -60,6 +60,8 @@
 
         </div>
     </main>
+
+    @stack('scripts')
 
 </body>
 

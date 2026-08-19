@@ -1,4 +1,9 @@
 *
 !.gitignore
 !products/
-!products/**
+!products/*.webp
+!products/*.jpg
+!products/*.jpeg
+!products/*.png
+!products/uploads/
+!products/uploads/.gitignore

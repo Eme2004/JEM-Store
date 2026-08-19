@@ -10,16 +10,23 @@ class SyncProductImages extends Command
 {
     protected $signature = 'products:sync-images';
 
-    protected $description = 'Actualiza únicamente la columna image de los productos existentes buscando storage/app/public/products/{slug}.{webp,jpg,jpeg,png}, sin tocar stock, precios ni otros datos';
+    protected $description = 'Actualiza únicamente la columna image de los productos existentes buscando storage/app/public/products/{slug}.{webp,jpg,jpeg,png}, sin tocar stock, precios ni otros datos. Nunca toca productos con una foto subida manualmente desde el panel admin (products/uploads/...)';
 
     private const EXTENSIONS = ['webp', 'jpg', 'jpeg', 'png'];
 
     public function handle(): int
     {
         Product::query()->orderBy('slug')->each(function (Product $product): void {
-            $image = collect(self::EXTENSIONS)
-                ->map(fn (string $extension) => "products/{$product->slug}.{$extension}")
-                ->first(fn (string $path) => Storage::disk('public')->exists($path));
+            $canonicalPaths = collect(self::EXTENSIONS)
+                ->map(fn (string $extension) => "products/{$product->slug}.{$extension}");
+
+            if ($product->image !== null && ! $canonicalPaths->contains($product->image)) {
+                $this->line("[SKIP] {$product->slug} -> imagen gestionada manualmente, no se modifica");
+
+                return;
+            }
+
+            $image = $canonicalPaths->first(fn (string $path) => Storage::disk('public')->exists($path));
 
             if ($image === null) {
                 $this->line("[SKIP] {$product->slug} -> imagen no encontrada");
