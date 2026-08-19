@@ -48,10 +48,37 @@ class ReportController extends Controller
             'summary' => $summary,
             'filters' => $filters,
             'customer' => $customer,
-        ]);
+        ])->setPaper('a4', 'portrait');
+
+        $this->drawPageNumbers($pdf);
 
         return $pdf->download(
             'reporte-ventas-'.now()->format('Ymd-His').'.pdf'
+        );
+    }
+
+    /**
+     * Dibuja "Pág. X de Y" en el pie de cada página. Se hace vía la API de
+     * Canvas de dompdf (no con el texto literal "{PAGE_NUM}" en el HTML)
+     * para no tener que activar enable_php solo por esto: ese HTML se
+     * evalúa como PHP embebido dentro del propio PDF, un riesgo que no
+     * vale la pena para un número de página.
+     */
+    private function drawPageNumbers(\Barryvdh\DomPDF\PDF $pdf): void
+    {
+        $pdf->render();
+
+        $dompdf = $pdf->getDomPDF();
+        $canvas = $dompdf->getCanvas();
+        $font = $dompdf->getFontMetrics()->getFont('DejaVu Sans');
+
+        $canvas->page_text(
+            $canvas->get_width() - 90,
+            $canvas->get_height() - 24,
+            'Pág. {PAGE_NUM} de {PAGE_COUNT}',
+            $font,
+            8,
+            [0.44, 0.43, 0.42]
         );
     }
 

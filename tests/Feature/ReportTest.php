@@ -168,6 +168,28 @@ class ReportTest extends TestCase
         $response->assertHeader('content-type', 'application/pdf');
     }
 
+    public function test_report_pdf_is_a_valid_pdf_document(): void
+    {
+        $user = User::factory()->create();
+        $this->createOrder($user);
+
+        $response = $this->actingAs($user)->get(route('reports.pdf'));
+
+        $response->assertOk();
+        $this->assertStringStartsWith('%PDF-', $response->getContent());
+    }
+
+    public function test_report_pdf_handles_no_sales_without_error(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('reports.pdf'));
+
+        $response->assertOk();
+        $response->assertHeader('content-type', 'application/pdf');
+        $this->assertStringStartsWith('%PDF-', $response->getContent());
+    }
+
     public function test_report_generates_pdf_with_filters(): void
     {
         $user = User::factory()->create();
