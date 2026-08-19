@@ -52,7 +52,6 @@ class ProductSeeder extends Seeder
                 'sale_price' => null,
                 'stock' => 22,
                 'audience' => 'hombre',
-                'image' => 'products/jem-signature-polo.png',
 
             ],
             [
@@ -234,6 +233,26 @@ class ProductSeeder extends Seeder
                 'sale_price' => null,
                 'stock' => 18,
                 'audience' => 'mujer',
+            ],
+            [
+                'category' => 'chaquetas',
+                'name' => 'JEM Meridian Jacket',
+                'slug' => 'jem-meridian-jacket',
+                'description' => 'Chaqueta masculina estructurada de líneas limpias y estética contemporánea.',
+                'price' => 68900,
+                'sale_price' => null,
+                'stock' => 10,
+                'audience' => 'hombre',
+            ],
+            [
+                'category' => 'bolsos',
+                'name' => 'JEM Form Bag',
+                'slug' => 'jem-form-bag',
+                'description' => 'Bolso estructurado de diseño minimalista pensado para acompañar looks contemporáneos.',
+                'price' => 52900,
+                'sale_price' => null,
+                'stock' => 12,
+                'audience' => 'unisex',
             ],
         ];
 
