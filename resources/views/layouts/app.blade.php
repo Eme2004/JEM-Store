@@ -755,6 +755,8 @@
         </footer>
     </div>
 
+    @include('partials.cookie-notice')
+
     @stack('scripts')
 </body>
 

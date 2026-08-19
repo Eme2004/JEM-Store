@@ -111,3 +111,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     syncCardFields();
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const STORAGE_KEY = 'jem_cookie_notice_dismissed';
+    const notice = document.querySelector('[data-cookie-notice]');
+    const acceptButton = document.querySelector('[data-cookie-notice-accept]');
+
+    if (!notice || !acceptButton) {
+        return;
+    }
+
+    let dismissed = false;
+
+    try {
+        dismissed = window.localStorage.getItem(STORAGE_KEY) === '1';
+    } catch (error) {
+        dismissed = false;
+    }
+
+    if (!dismissed) {
+        notice.classList.remove('d-none');
+    }
+
+    acceptButton.addEventListener('click', () => {
+        notice.classList.add('d-none');
+
+        try {
+            window.localStorage.setItem(STORAGE_KEY, '1');
+        } catch (error) {
+            // localStorage no disponible (modo privado, etc.): el aviso
+            // simplemente volverá a mostrarse en la próxima visita.
+        }
+    });
+});
