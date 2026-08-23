@@ -78,7 +78,8 @@
                                 </a>
 
                                 <form action="{{ route('admin.products.destroy', $product) }}" method="POST"
-                                    onsubmit="return confirm('¿Eliminar {{ addslashes($product->name) }}? Esta acción no se puede deshacer.');">
+                                    data-confirm-submit
+                                    data-confirm-message="¿Eliminar {{ $product->name }}? Esta acción no se puede deshacer.">
                                     @csrf
                                     @method('DELETE')
 

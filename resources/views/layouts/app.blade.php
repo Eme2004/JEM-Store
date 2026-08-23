@@ -503,6 +503,25 @@
     FOOTER JEM
 ================================================== --}}
         <footer class="jem-footer">
+
+            {{-- Marquesina de marca --}}
+            <div class="jem-marquee" aria-hidden="true">
+                <div class="jem-marquee__inner">
+                    @for ($i = 0; $i < 2; $i++)
+                        <div class="jem-marquee__track">
+                            <span class="jem-marquee__item">Define your presence</span>
+                            <span class="jem-marquee__item jem-marquee__dot">&middot;</span>
+                            <span class="jem-marquee__item">Nothing is casual</span>
+                            <span class="jem-marquee__item jem-marquee__dot">&middot;</span>
+                            <span class="jem-marquee__item">JEM</span>
+                            <span class="jem-marquee__item jem-marquee__dot">&middot;</span>
+                            <span class="jem-marquee__item">Contemporary clothing &amp; accessories</span>
+                            <span class="jem-marquee__item jem-marquee__dot">&middot;</span>
+                        </div>
+                    @endfor
+                </div>
+            </div>
+
             <div class="container-fluid px-4 px-lg-5">
 
                 <div class="row gy-5">
