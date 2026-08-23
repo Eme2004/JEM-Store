@@ -154,6 +154,41 @@ body {
     box-shadow: 0 0 0 1px $jem-ink;
 }
 
+.auth-password-wrap {
+    position: relative;
+}
+
+.auth-password-wrap .auth-input {
+    padding-right: 3rem;
+}
+
+.auth-password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 3px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: $jem-ash;
+    cursor: pointer;
+}
+
+.auth-password-toggle:hover,
+.auth-password-toggle--visible {
+    color: $jem-ink;
+}
+
+.auth-password-toggle:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px $jem-ink;
+}
+
 .braintree-hosted-field {
     display: flex;
     align-items: center;
@@ -590,8 +625,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     padding: 0 !important;
     color: $jem-obsidian !important;
     cursor: pointer;
@@ -744,8 +779,6 @@ body {
     }
 
     .jem-icon-link {
-        width: 44px;
-        height: 44px;
         background-color: $jem-porcelain;
     }
 }
@@ -2399,8 +2432,7 @@ body {
 
 .product-detail-quantity-input:focus {
     border-color: $jem-ink;
-    box-shadow: none;
-    outline: none;
+    box-shadow: 0 0 0 1px $jem-ink;
 }
 
 
@@ -3062,6 +3094,67 @@ body {
 
 
 // --------------------------------------------------
+// Animaciones - Marquesina del footer
+// --------------------------------------------------
+
+.jem-marquee {
+    overflow: hidden;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.jem-marquee__inner {
+    display: flex;
+    width: max-content;
+    animation: jem-marquee 26s linear infinite;
+}
+
+.jem-marquee:hover .jem-marquee__inner {
+    animation-play-state: paused;
+}
+
+.jem-marquee__track {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.jem-marquee__item {
+    flex-shrink: 0;
+    padding: 0 1rem;
+    color: rgba(255, 255, 255, 0.18);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(0.95rem, 1.6vw, 1.35rem);
+    font-style: italic;
+    letter-spacing: 0.01rem;
+    white-space: nowrap;
+}
+
+.jem-marquee__dot {
+    color: $jem-sky;
+    opacity: 0.5;
+}
+
+@keyframes jem-marquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .jem-marquee__track {
+        animation: none;
+    }
+}
+
+
+// --------------------------------------------------
 // Animaciones - Reveal al hacer scroll
 // --------------------------------------------------
 // Clase agregada dinámicamente por app.js vía IntersectionObserver
@@ -3298,9 +3391,11 @@ body {
 
 .admin-table-actions a,
 .admin-table-actions button {
+    display: inline-flex;
+    align-items: center;
     border: 0;
     background: transparent;
-    padding: 0;
+    padding: 0.4rem 0.15rem;
     color: $jem-ink;
     font-size: 0.75rem;
     font-weight: 700;
@@ -3316,6 +3411,94 @@ body {
 .admin-table-actions a:hover,
 .admin-table-actions button:hover {
     color: $jem-merlot;
+}
+
+
+// --------------------------------------------------
+// Modal de confirmación (reemplaza confirm() nativo)
+// --------------------------------------------------
+
+.jem-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.jem-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(22, 22, 22, 0.55);
+}
+
+.jem-modal__panel {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    padding: 2rem;
+    background-color: $jem-white;
+    border: 1px solid $jem-stone;
+    border-radius: 0;
+}
+
+.jem-modal__title {
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $jem-obsidian;
+}
+
+.jem-modal__message {
+    margin-bottom: 1.75rem;
+    color: $jem-ash;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.jem-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.jem-modal__cancel,
+.jem-modal__confirm {
+    min-height: 44px;
+    padding: 0.6rem 1.25rem;
+    border: 1px solid $jem-stone;
+    border-radius: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02rem;
+    text-transform: uppercase;
+}
+
+.jem-modal__cancel {
+    background-color: $jem-white;
+    color: $jem-obsidian;
+}
+
+.jem-modal__cancel:hover {
+    background-color: $jem-porcelain;
+}
+
+.jem-modal__confirm {
+    border-color: $jem-merlot;
+    background-color: $jem-merlot;
+    color: $jem-white;
+}
+
+.jem-modal__confirm:hover {
+    background-color: darken($jem-merlot, 6%);
+}
+
+.jem-modal__confirm:focus,
+.jem-modal__cancel:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px $jem-ink;
 }
 
 .admin-badge {

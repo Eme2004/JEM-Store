@@ -145,3 +145,95 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.querySelector('[data-confirm-modal]');
+
+    if (!modal) {
+        return;
+    }
+
+    const messageEl = modal.querySelector('[data-confirm-modal-message]');
+    const confirmButton = modal.querySelector('[data-confirm-modal-confirm]');
+    const cancelTriggers = modal.querySelectorAll('[data-confirm-modal-cancel]');
+
+    let pendingForm = null;
+
+    const openModal = (form) => {
+        pendingForm = form;
+        messageEl.textContent = form.dataset.confirmMessage || '¿Confirmar esta acción?';
+        modal.classList.remove('d-none');
+        confirmButton.focus();
+    };
+
+    const closeModal = () => {
+        pendingForm = null;
+        modal.classList.add('d-none');
+    };
+
+    document.addEventListener('submit', (event) => {
+        const form = event.target.closest('[data-confirm-submit]');
+
+        if (!form || form.dataset.confirmed === '1') {
+            return;
+        }
+
+        event.preventDefault();
+        openModal(form);
+    });
+
+    confirmButton.addEventListener('click', () => {
+        if (!pendingForm) {
+            return;
+        }
+
+        pendingForm.dataset.confirmed = '1';
+        pendingForm.requestSubmit();
+        closeModal();
+    });
+
+    cancelTriggers.forEach((trigger) => {
+        trigger.addEventListener('click', closeModal);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !modal.classList.contains('d-none')) {
+            closeModal();
+        }
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const passwordInputs = document.querySelectorAll('.auth-card input[type="password"]');
+
+    passwordInputs.forEach((input) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'auth-password-wrap';
+        input.parentNode.insertBefore(wrap, input);
+        wrap.appendChild(input);
+
+        const toggle = document.createElement('button');
+        toggle.type = 'button';
+        toggle.className = 'auth-password-toggle';
+        toggle.setAttribute('aria-label', 'Mostrar contraseña');
+        toggle.setAttribute('aria-pressed', 'false');
+        toggle.innerHTML = `
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2 12C2 12 5.5 5 12 5C18.5 5 22 12 22 12C22 12 18.5 19 12 19C5.5 19 2 12 2 12Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+        `;
+        wrap.appendChild(toggle);
+
+        toggle.addEventListener('click', () => {
+            const isVisible = input.type === 'text';
+            input.type = isVisible ? 'password' : 'text';
+            toggle.setAttribute('aria-pressed', String(!isVisible));
+            toggle.setAttribute('aria-label', isVisible ? 'Mostrar contraseña' : 'Ocultar contraseña');
+            toggle.classList.toggle('auth-password-toggle--visible', !isVisible);
+        });
+    });
+});

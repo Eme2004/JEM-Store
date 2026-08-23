@@ -61,6 +61,8 @@
         </div>
     </main>
 
+    @include('partials.confirm-modal')
+
     @stack('scripts')
 
 </body>
