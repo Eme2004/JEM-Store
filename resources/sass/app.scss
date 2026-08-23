@@ -2074,20 +2074,20 @@ body {
 // --------------------------------------------------
 
 .jem-footer {
-    padding: 2.75rem 0 1.25rem;
+    padding: 2.5rem 0 1.25rem;
     background-color: $jem-obsidian;
     color: $jem-white;
 }
 
 .jem-footer-logo {
     display: inline-block;
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
     text-decoration: none;
 }
 
 .jem-footer-logo-img {
-    height: 44px;
-    width: auto;
+    width: 64px;
+    height: auto;
     transition: opacity 0.2s ease;
 }
 
@@ -2111,7 +2111,7 @@ body {
 }
 
 .jem-footer-title {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     color: $jem-white;
     font-size: 0.72rem;
     font-weight: 700;
@@ -2126,7 +2126,7 @@ body {
 }
 
 .jem-footer-list li+li {
-    margin-top: 0.55rem;
+    margin-top: 0.4rem;
 }
 
 .jem-footer-list a {
@@ -2148,28 +2148,25 @@ body {
     line-height: 1.8;
 }
 
-.jem-footer-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-top: 1.5rem;
-    padding-top: 1.1rem;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.72rem;
-}
-
 .jem-footer-legal {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.9rem;
-    padding-top: 0.9rem;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    margin-top: 1rem;
+    padding-top: 0.85rem;
     border-top: 1px solid rgba(255, 255, 255, 0.12);
     color: rgba(255, 255, 255, 0.45);
     font-size: 0.68rem;
-    line-height: 1.6;
+    line-height: 1.5;
+}
+
+.jem-footer-legal__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .jem-footer-legal a {
@@ -2193,11 +2190,11 @@ body {
 .jem-footer-contact__item {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
+    gap: 0.2rem;
 }
 
 .jem-footer-contact__item+.jem-footer-contact__item {
-    margin-top: 0.8rem;
+    margin-top: 0.55rem;
 }
 
 .jem-footer-contact__label {
@@ -2212,7 +2209,7 @@ body {
 .jem-footer-contact__item a {
     color: rgba(255, 255, 255, 0.72);
     font-size: 0.86rem;
-    line-height: 1.6;
+    line-height: 1.5;
     text-decoration: none;
 }
 
@@ -2230,10 +2227,9 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 2rem;
-    margin-top: 4rem;
-    padding: 2rem 0;
+    margin-top: 1.5rem;
+    padding: 1.125rem 0;
     border-top: 1px solid rgba(255, 255, 255, 0.12);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .jem-footer-payment-title {
@@ -2294,17 +2290,6 @@ body {
 
 
 // --------------------------------------------------
-// Footer inferior
-// --------------------------------------------------
-
-.jem-footer-bottom__right {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-
-// --------------------------------------------------
 // Members / Footer - Responsive
 // --------------------------------------------------
 
@@ -2317,51 +2302,26 @@ body {
         font-size: 3rem;
     }
 
+    .jem-footer {
+        padding: 2.5rem 0 1.25rem;
+    }
+
     .jem-footer-payment-section {
         align-items: flex-start;
         flex-direction: column;
-        gap: 1.25rem;
-        margin-top: 3rem;
+        gap: 0.75rem;
+        margin-top: 1.25rem;
     }
 
     .jem-footer-payment-list {
         width: 100%;
     }
 
-    .jem-footer-bottom__right {
+    .jem-footer-legal {
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.35rem;
+        gap: 0.6rem;
     }
-
-    .jem-footer {
-        padding: 3.5rem 0 1.5rem;
-    }
-
-    .jem-footer-bottom {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-        margin-top: 2rem;
-    }
-
-    .jem-footer-contact {
-        margin-bottom: 2rem;
-    }
-
-    .jem-footer-payment-section {
-        margin-top: 2rem;
-    }
-
-    .jem-footer-bottom {
-        margin-top: 1.5rem;
-        padding-top: 1.5rem;
-    }
-
-    .jem-footer-bottom__right {
-        margin-top: 0.5rem;
-    }
-
 }
 
 
@@ -3094,29 +3054,41 @@ body {
 
 
 // --------------------------------------------------
-// Animaciones - Onda del footer
+// Animaciones - Estrellas del footer
 // --------------------------------------------------
-// Barras controladas por JS (ver app.js) con requestAnimationFrame,
-// activadas solo mientras el footer está en viewport (IntersectionObserver).
+// Puro CSS: cada estrella titila con su propio delay/duración
+// (definidos inline por Blade) para que no titilen todas a la vez.
 
-.jem-footer-wave {
+.jem-footer-stars {
+    position: relative;
     overflow: hidden;
-    height: 130px;
-    margin-top: 2rem;
+    height: 90px;
+    margin-top: 1.5rem;
 }
 
-.jem-footer-wave__bar {
-    width: 100%;
-    margin-top: -2px;
-    background-color: rgba(196, 216, 240, 0.85);
-    transition: transform 0.1s ease;
-    will-change: transform;
+.jem-footer-star {
+    position: absolute;
+    border-radius: 50%;
+    background-color: $jem-sky;
+    animation: jem-star-twinkle ease-in-out infinite;
+}
+
+@keyframes jem-star-twinkle {
+    0%, 100% {
+        opacity: 0.15;
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .jem-footer-wave__bar {
-        transition: none;
-        transform: none !important;
+    .jem-footer-star {
+        animation: none;
+        opacity: 0.6;
     }
 }
 
