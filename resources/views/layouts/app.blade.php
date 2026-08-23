@@ -506,10 +506,10 @@
 
             <div class="container-fluid px-4 px-lg-5">
 
-                <div class="row gy-4">
+                <div class="row gy-3">
 
                     {{-- Marca --}}
-                    <div class="col-12 col-lg-4">
+                    <div class="col-12 col-md-6 col-lg-4">
 
                         <a href="{{ route('home') }}" class="jem-footer-logo">
                             <img src="{{ asset('images/logo/jem-logo-white.webp') }}" alt="JEM Store" class="jem-footer-logo-img">
@@ -529,7 +529,7 @@
 
 
                     {{-- Tienda --}}
-                    <div class="col-6 col-md-3 col-lg-2">
+                    <div class="col-6 col-md-6 col-lg-2">
 
                         <h2 class="jem-footer-title">
                             Tienda
@@ -579,7 +579,7 @@
 
 
                     {{-- Cuenta --}}
-                    <div class="col-6 col-md-3 col-lg-2">
+                    <div class="col-6 col-md-6 col-lg-2">
 
                         <h2 class="jem-footer-title">
                             Cuenta
@@ -626,34 +626,6 @@
                             @endguest
 
                         </ul>
-                    </div>
-
-                    {{-- Métodos de pago --}}
-                    <div class="jem-footer-payment-section">
-                        <span class="jem-footer-payment-title">
-                            Métodos de pago
-                        </span>
-
-                        <div class="jem-footer-payment-list">
-
-                            <div class="jem-payment-method jem-payment-visa">
-                                VISA
-                            </div>
-
-                            <div class="jem-payment-method">
-                                <span class="jem-mastercard-circles">
-                                    <span></span>
-                                    <span></span>
-                                </span>
-
-                                <span>Mastercard</span>
-                            </div>
-
-                            <div class="jem-payment-method">
-                                SINPE Móvil
-                            </div>
-
-                        </div>
                     </div>
 
                     {{-- Contacto --}}
@@ -713,51 +685,67 @@
                 </div>
 
 
-                {{-- Parte inferior --}}
-                <div class="jem-footer-bottom">
+                {{-- Métodos de pago --}}
+                <div class="jem-footer-payment-section">
+                    <span class="jem-footer-payment-title">
+                        Métodos de pago
+                    </span>
 
-                    <div>
-                        <p class="mb-1">
-                            © {{ now()->year }} JEM Store
-                        </p>
+                    <div class="jem-footer-payment-list">
 
-                        <p class="mb-0">
-                            La Legua, Porvenir, Alajuela, Costa Rica
-                        </p>
+                        <div class="jem-payment-method jem-payment-visa">
+                            VISA
+                        </div>
+
+                        <div class="jem-payment-method">
+                            <span class="jem-mastercard-circles">
+                                <span></span>
+                                <span></span>
+                            </span>
+
+                            <span>Mastercard</span>
+                        </div>
+
+                        <div class="jem-payment-method">
+                            SINPE Móvil
+                        </div>
+
                     </div>
-
-                    <div class="jem-footer-bottom__right">
-                        <span>
-                            Todos los derechos reservados.
-                        </span>
-
-                        <span>
-                            JEM / Contemporary clothing & accessories
-                        </span>
-                    </div>
-
                 </div>
 
 
                 {{-- Línea legal --}}
                 <div class="jem-footer-legal">
-                    © Copyright {{ now()->year }} by JEM Store
-                    <span aria-hidden="true">|</span>
-                    <a href="{{ route('legal.disclaimer') }}">Disclaimer</a>
-                    <span aria-hidden="true">|</span>
-                    <a href="{{ route('legal.terms') }}">Terms of Use</a>
-                    <span aria-hidden="true">|</span>
-                    <a href="{{ route('legal.privacy') }}">Privacy Policy</a>
-                    <span aria-hidden="true">|</span>
-                    Website &amp; Branding by Emesis Mairena y Jairo Herrera
+                    <span class="jem-footer-legal__copyright">
+                        © Copyright {{ now()->year }} by JEM Store
+                    </span>
+
+                    <span class="jem-footer-legal__links">
+                        <a href="{{ route('legal.disclaimer') }}">Disclaimer</a>
+                        <span aria-hidden="true">|</span>
+                        <a href="{{ route('legal.terms') }}">Terms of Use</a>
+                        <span aria-hidden="true">|</span>
+                        <a href="{{ route('legal.privacy') }}">Privacy Policy</a>
+                    </span>
+
+                    <span class="jem-footer-legal__credit">
+                        Website &amp; Branding by Emesis Mairena y Jairo Herrera
+                    </span>
                 </div>
 
             </div>
 
-            {{-- Onda animada --}}
-            <div class="jem-footer-wave" aria-hidden="true" data-footer-wave>
-                @for ($i = 0; $i < 24; $i++)
-                    <div class="jem-footer-wave__bar" style="height: {{ $i + 1 }}px"></div>
+            {{-- Estrellas --}}
+            <div class="jem-footer-stars" aria-hidden="true">
+                @for ($i = 0; $i < 70; $i++)
+                    <span class="jem-footer-star" style="
+                        top: {{ rand(0, 100) }}%;
+                        left: {{ rand(0, 100) }}%;
+                        width: {{ rand(1, 3) }}px;
+                        height: {{ rand(1, 3) }}px;
+                        animation-duration: {{ rand(20, 45) / 10 }}s;
+                        animation-delay: -{{ rand(0, 45) / 10 }}s;
+                    "></span>
                 @endfor
             </div>
         </footer>
