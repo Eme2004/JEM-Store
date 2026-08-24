@@ -341,7 +341,7 @@
 
             <td class="header-right">
                 <div class="report-title">Reporte de ventas</div>
-                <div class="generated-at">Generado el {{ now()->format('d/m/Y H:i') }}</div>
+                <div class="generated-at">Generado el {{ now()->format('d/m/Y h:i A') }}</div>
             </td>
         </tr>
     </table>
@@ -408,7 +408,7 @@
                 @foreach ($orders as $index => $order)
                     <tr class="{{ $index % 2 === 0 ? 'odd' : '' }}">
                         <td>{{ $order->order_number }}</td>
-                        <td>{{ $order->created_at->format('d/m/Y') }}</td>
+                        <td>{{ $order->created_at->format('d/m/Y h:i A') }}</td>
                         <td>{{ $order->user->name }}</td>
                         <td class="text-right">₡{{ number_format($order->subtotal, 0, ',', '.') }}</td>
                         <td class="text-right">₡{{ number_format($order->tax, 0, ',', '.') }}</td>

@@ -138,7 +138,7 @@
                                             {{ $order->order_number }}
                                         </a>
                                     </td>
-                                    <td>{{ $order->created_at->format('d/m/Y') }}</td>
+                                    <td>{{ $order->created_at->format('d/m/Y h:i A') }}</td>
                                     <td>{{ $order->user->name }}</td>
                                     <td class="text-end">₡{{ number_format($order->subtotal, 0, ',', '.') }}</td>
                                     <td class="text-end">₡{{ number_format($order->tax, 0, ',', '.') }}</td>
