@@ -112,10 +112,12 @@ Route::middleware('auth')->group(function () {
     // Reportes de ventas
     // --------------------------------------------------
 
-    Route::get('/reportes', [ReportController::class, 'index'])
+    Route::middleware('admin')->group(function () {
+
+        Route::get('/reportes', [ReportController::class, 'index'])
         ->name('reports.index');
 
-    Route::get('/reportes/pdf', [ReportController::class, 'pdf'])
+        Route::get('/reportes/pdf', [ReportController::class, 'pdf'])
         ->name('reports.pdf');
 
 
@@ -145,4 +147,6 @@ Route::middleware('auth')->group(function () {
 
     });
 
+
+    });
 });
