@@ -113,9 +113,11 @@ Route::middleware('auth')->group(function () {
     // --------------------------------------------------
 
     Route::get('/reportes', [ReportController::class, 'index'])
+        ->middleware('admin')
         ->name('reports.index');
 
     Route::get('/reportes/pdf', [ReportController::class, 'pdf'])
+        ->middleware('admin')
         ->name('reports.pdf');
 
 

@@ -13,6 +13,11 @@ class ReportTest extends TestCase
 {
     use RefreshDatabase;
 
+    private function admin(): User
+    {
+        return User::factory()->create(['is_admin' => true]);
+    }
+
     private function createProduct(array $data = []): Product
     {
         $ropa = Category::where('slug', 'ropa')->first()
@@ -81,6 +86,24 @@ class ReportTest extends TestCase
         $response->assertRedirect(route('login'));
     }
 
+    public function test_non_admin_cannot_view_reports(): void
+    {
+        $user = User::factory()->create(['is_admin' => false]);
+
+        $response = $this->actingAs($user)->get(route('reports.index'));
+
+        $response->assertForbidden();
+    }
+
+    public function test_non_admin_cannot_download_report_pdf(): void
+    {
+        $user = User::factory()->create(['is_admin' => false]);
+
+        $response = $this->actingAs($user)->get(route('reports.pdf'));
+
+        $response->assertForbidden();
+    }
+
     public function test_report_shows_all_confirmed_sales_by_default(): void
     {
         $userA = User::factory()->create();
@@ -89,7 +112,7 @@ class ReportTest extends TestCase
         $this->createOrder($userA);
         $this->createOrder($userB);
 
-        $response = $this->actingAs($userA)->get(route('reports.index'));
+        $response = $this->actingAs($this->admin())->get(route('reports.index'));
 
         $response->assertOk();
         $response->assertViewHas('orders', fn ($orders) => $orders->count() === 2);
@@ -108,7 +131,7 @@ class ReportTest extends TestCase
             'created_at' => '2026-04-10 10:00:00',
         ]);
 
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->admin())
             ->get(route('reports.index', ['month' => '2026-03']));
 
         $response->assertOk();
@@ -124,7 +147,7 @@ class ReportTest extends TestCase
         $orderA = $this->createOrder($userA);
         $orderB = $this->createOrder($userB);
 
-        $response = $this->actingAs($userA)
+        $response = $this->actingAs($this->admin())
             ->get(route('reports.index', ['user_id' => $userA->id]));
 
         $response->assertOk();
@@ -139,7 +162,7 @@ class ReportTest extends TestCase
         $paid = $this->createOrder($user, ['payment_status' => 'paid']);
         $pending = $this->createOrder($user, ['payment_status' => 'pending']);
 
-        $response = $this->actingAs($user)->get(route('reports.index'));
+        $response = $this->actingAs($this->admin())->get(route('reports.index'));
 
         $response->assertSee($paid->order_number);
         $response->assertDontSee($pending->order_number);
@@ -152,7 +175,7 @@ class ReportTest extends TestCase
         $this->createOrder($user, ['total' => 10000]);
         $this->createOrder($user, ['total' => 25000]);
 
-        $response = $this->actingAs($user)->get(route('reports.index'));
+        $response = $this->actingAs($this->admin())->get(route('reports.index'));
 
         $response->assertViewHas('summary', fn ($summary) => (float) $summary['total'] === 35000.0);
     }
@@ -162,7 +185,7 @@ class ReportTest extends TestCase
         $user = User::factory()->create();
         $this->createOrder($user);
 
-        $response = $this->actingAs($user)->get(route('reports.pdf'));
+        $response = $this->actingAs($this->admin())->get(route('reports.pdf'));
 
         $response->assertOk();
         $response->assertHeader('content-type', 'application/pdf');
@@ -173,7 +196,7 @@ class ReportTest extends TestCase
         $user = User::factory()->create();
         $this->createOrder($user);
 
-        $response = $this->actingAs($user)->get(route('reports.pdf'));
+        $response = $this->actingAs($this->admin())->get(route('reports.pdf'));
 
         $response->assertOk();
         $this->assertStringStartsWith('%PDF-', $response->getContent());
@@ -181,9 +204,7 @@ class ReportTest extends TestCase
 
     public function test_report_pdf_handles_no_sales_without_error(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->get(route('reports.pdf'));
+        $response = $this->actingAs($this->admin())->get(route('reports.pdf'));
 
         $response->assertOk();
         $response->assertHeader('content-type', 'application/pdf');
@@ -195,7 +216,7 @@ class ReportTest extends TestCase
         $user = User::factory()->create();
         $this->createOrder($user, ['created_at' => '2026-03-15 10:00:00']);
 
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->admin())
             ->get(route('reports.pdf', ['month' => '2026-03', 'user_id' => $user->id]));
 
         $response->assertOk();
@@ -204,9 +225,7 @@ class ReportTest extends TestCase
 
     public function test_report_rejects_invalid_month_format(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->admin())
             ->get(route('reports.index', ['month' => 'not-a-month']));
 
         $response->assertSessionHasErrors('month');

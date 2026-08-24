@@ -384,13 +384,13 @@
                                             </a>
                                         </li>
 
-                                        <li>
-                                            <a class="dropdown-item" href="{{ route('reports.index') }}">
-                                                Reportes de ventas
-                                            </a>
-                                        </li>
-
                                         @if (Auth::user()->is_admin)
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('reports.index') }}">
+                                                    Reportes de ventas
+                                                </a>
+                                            </li>
+
                                             <li>
                                                 <a class="dropdown-item" href="{{ route('admin.products.index') }}">
                                                     Panel de administración
@@ -618,11 +618,13 @@
                                     </a>
                                 </li>
 
-                                <li>
-                                    <a href="{{ route('reports.index') }}">
-                                        Reportes de ventas
-                                    </a>
-                                </li>
+                                @if (Auth::user()->is_admin)
+                                    <li>
+                                        <a href="{{ route('reports.index') }}">
+                                            Reportes de ventas
+                                        </a>
+                                    </li>
+                                @endif
                             @endguest
 
                         </ul>
