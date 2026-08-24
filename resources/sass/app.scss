@@ -275,6 +275,288 @@ body {
 
 
 // --------------------------------------------------
+// Medidor de fuerza de contraseña (registro)
+// --------------------------------------------------
+
+.password-strength {
+    margin: 0.65rem 0 0;
+}
+
+.password-strength-bars {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.35rem;
+}
+
+.password-strength-bar {
+    height: 4px;
+    border-radius: 2px;
+    background-color: $jem-stone;
+    overflow: hidden;
+    color: $jem-stone;
+}
+
+.password-strength-bar::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 0%;
+    border-radius: 2px;
+    background-color: currentColor;
+    transition: width 0.35s ease;
+}
+
+.password-strength-bar.is-filled::after {
+    width: 100%;
+}
+
+.password-strength[data-tone='danger'] .password-strength-bar.is-filled {
+    color: $jem-merlot;
+}
+
+.password-strength[data-tone='caution'] .password-strength-bar.is-filled {
+    color: $jem-amber;
+}
+
+.password-strength[data-tone='safe'] .password-strength-bar.is-filled {
+    color: $jem-sage;
+}
+
+.password-strength[data-tone='danger'] .password-strength-label {
+    color: $jem-merlot;
+}
+
+.password-strength[data-tone='caution'] .password-strength-label {
+    color: $jem-amber;
+}
+
+.password-strength[data-tone='safe'] .password-strength-label {
+    color: $jem-sage;
+}
+
+.password-strength-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    min-height: 1.1rem;
+}
+
+.password-strength-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: $jem-ash;
+}
+
+.password-strength-warning {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: $jem-amber;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.password-strength-warning.is-visible {
+    opacity: 1;
+}
+
+.password-strength-rules {
+    display: grid;
+    gap: 0.4rem;
+    margin: 0.85rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.password-strength-rules li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: $jem-ash;
+    font-size: 0.8rem;
+    transition: color 0.2s ease;
+}
+
+.password-strength-check {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    border: 1px solid $jem-stone;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.password-strength-check::after {
+    content: '';
+    width: 7px;
+    height: 4px;
+    border-left: 1.6px solid $jem-white;
+    border-bottom: 1.6px solid $jem-white;
+    transform: rotate(-45deg) translateY(-1px);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.password-strength-rules li.is-met {
+    color: $jem-obsidian;
+}
+
+.password-strength-rules li.is-met .password-strength-check {
+    background-color: $jem-sage;
+    border-color: $jem-sage;
+}
+
+.password-strength-rules li.is-met .password-strength-check::after {
+    opacity: 1;
+}
+
+
+// --------------------------------------------------
+// Auth "glow" (tarjeta de inicio de sesión)
+// --------------------------------------------------
+
+.auth-page--glow {
+    position: relative;
+    overflow: hidden;
+    background-color: $jem-obsidian;
+    background-image:
+        radial-gradient(60% 55% at 28% 18%, rgba($jem-merlot, 0.5), transparent 70%),
+        radial-gradient(55% 60% at 78% 82%, rgba($jem-ink, 0.65), transparent 70%);
+}
+
+.auth-card--glow {
+    border: 1px solid rgba($jem-white, 0.12);
+    border-radius: 20px;
+    background-color: rgba($jem-white, 0.06);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
+}
+
+.auth-card--glow::before {
+    display: none;
+}
+
+.auth-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 1.25rem;
+    border: 1px solid rgba($jem-white, 0.16);
+    border-radius: 50%;
+    background-color: rgba($jem-white, 0.08);
+}
+
+.auth-badge-img {
+    width: auto;
+    height: 22px;
+    filter: brightness(0) invert(1);
+}
+
+.auth-title--glow {
+    color: $jem-white;
+}
+
+.auth-subtitle--glow {
+    color: rgba($jem-white, 0.6);
+}
+
+.auth-input-icon-group {
+    position: relative;
+}
+
+.auth-input-icon {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    display: flex;
+    color: rgba($jem-white, 0.45);
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.auth-input--glow {
+    border-color: rgba($jem-white, 0.14);
+    border-radius: 12px;
+    background-color: rgba($jem-white, 0.05);
+    color: $jem-white;
+    padding-left: 2.75rem;
+}
+
+.auth-input--glow::placeholder {
+    color: rgba($jem-white, 0.4);
+}
+
+.auth-input--glow:focus {
+    border-color: $jem-sky;
+    background-color: rgba($jem-white, 0.08);
+    box-shadow: 0 0 0 1px $jem-sky;
+}
+
+.auth-card--glow .auth-password-toggle {
+    color: rgba($jem-white, 0.45);
+}
+
+.auth-card--glow .auth-password-toggle:hover,
+.auth-card--glow .auth-password-toggle--visible {
+    color: $jem-sky;
+}
+
+.auth-card--glow .auth-password-toggle:focus-visible {
+    box-shadow: 0 0 0 2px $jem-sky;
+}
+
+.auth-check--glow .form-check-input {
+    background-color: rgba($jem-white, 0.08);
+    border-color: rgba($jem-white, 0.3);
+}
+
+.auth-check--glow .form-check-input:checked {
+    background-color: $jem-sky;
+    border-color: $jem-sky;
+}
+
+.auth-small-text--glow {
+    color: rgba($jem-white, 0.65);
+}
+
+.auth-link--glow {
+    color: $jem-sky;
+}
+
+.auth-link--glow:hover {
+    color: $jem-white;
+}
+
+.auth-button--glow {
+    border: 0;
+    border-radius: 12px;
+    background-color: $jem-white;
+    color: $jem-obsidian;
+}
+
+.auth-button--glow:hover {
+    background-color: $jem-sky;
+    color: $jem-obsidian;
+}
+
+.auth-footer--glow {
+    color: rgba($jem-white, 0.55);
+}
+
+.auth-error--glow {
+    color: #e8a7b1;
+}
+
+
+// --------------------------------------------------
 // Responsive
 // --------------------------------------------------
 
