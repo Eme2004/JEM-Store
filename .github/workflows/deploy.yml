@@ -114,13 +114,14 @@ jobs:
             --exclude='public/hot' \
             ./ "${ALWAYSDATA_USER}@${ALWAYSDATA_HOST}:${ALWAYSDATA_PATH}/"
 
-      - name: Comandos post-deploy (migraciones, storage link, imágenes, cachés)
+      - name: Comandos post-deploy (migraciones, storage link, catálogo, imágenes, cachés)
         run: |
           ssh -i ~/.ssh/deploy_key "${ALWAYSDATA_USER}@${ALWAYSDATA_HOST}" '
             set -e
             cd '"${ALWAYSDATA_PATH}"'
             php artisan migrate --force
             php artisan storage:link || true
+            php artisan db:seed --class=ProductSeeder --force
             php artisan products:sync-images
             php artisan optimize:clear
             php artisan optimize
