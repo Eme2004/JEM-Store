@@ -384,11 +384,13 @@
                                             </a>
                                         </li>
 
-                                        <li>
-                                            <a class="dropdown-item" href="{{ route('reports.index') }}">
-                                                Reportes de ventas
-                                            </a>
-                                        </li>
+                                        @if (Auth::user()->is_admin)
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('reports.index') }}">
+                                                    Reportes de ventas
+                                                </a>
+                                            </li>
+                                        @endif
 
                                         @if (Auth::user()->is_admin)
                                             <li>
@@ -618,11 +620,13 @@
                                     </a>
                                 </li>
 
-                                <li>
-                                    <a href="{{ route('reports.index') }}">
-                                        Reportes de ventas
-                                    </a>
-                                </li>
+                                @if (Auth::user()->is_admin)
+                                    <li>
+                                        <a href="{{ route('reports.index') }}">
+                                            Reportes de ventas
+                                        </a>
+                                    </li>
+                                @endif
                             @endguest
 
                         </ul>
