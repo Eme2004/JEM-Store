@@ -384,6 +384,7 @@
                                             </a>
                                         </li>
 
+
                                         @if (Auth::user()->is_admin)
                                             <li>
                                                 <a class="dropdown-item" href="{{ route('reports.index') }}">
@@ -393,6 +394,12 @@
                                         @endif
 
                                         @if (Auth::user()->is_admin)
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('reports.index') }}">
+                                                    Reportes de ventas
+                                                </a>
+                                            </li>
+
                                             <li>
                                                 <a class="dropdown-item" href="{{ route('admin.products.index') }}">
                                                     Panel de administración

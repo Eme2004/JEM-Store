@@ -6,6 +6,7 @@ use App\Exceptions\CheckoutException;
 use App\Models\Order;
 use App\Services\CartService;
 use App\Services\CheckoutService;
+use App\Services\Payments\BraintreeGatewayService;
 use App\Services\Payments\PaymentGatewayContract;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,7 +49,11 @@ class CheckoutController extends Controller
             'user' => $user,
             'checkoutToken' => $checkoutToken,
             'braintreeClientToken' => $this->gateway->clientToken(),
-            'braintreeConfigured' => filled(config('services.braintree.private_key')),
+            // Deriva del gateway realmente resuelto por AppServiceProvider (que exige
+            // merchant_id + public_key + private_key), no de un chequeo de config
+            // aparte: evita que la UI muestre los hosted fields reales mientras el
+            // backend está usando en silencio FakeSandboxGatewayService.
+            'braintreeConfigured' => $this->gateway instanceof BraintreeGatewayService,
         ]);
     }
 
