@@ -1,8 +1,4 @@
 import './bootstrap';
-import { initHeroShader } from './shader-hero';
-
-document.addEventListener('DOMContentLoaded', initHeroShader);
-
 
 document.addEventListener('DOMContentLoaded', () => {
     const announcements = window.jemAnnouncements ?? [];

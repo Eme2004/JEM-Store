@@ -32,9 +32,7 @@
                 </div>
 
                 <div class="col-12 col-lg-5 mt-5 mt-lg-0">
-                    <div class="jem-home-hero__visual" data-shader-hero>
-                        <canvas class="jem-hero-shader" aria-hidden="true"></canvas>
-
+                    <div class="jem-home-hero__visual">
                         <img src="{{ asset('images/home/hero-campaign.webp') }}"
                             alt="Nueva colección JEM Store" class="jem-home-hero__visual-img">
 
