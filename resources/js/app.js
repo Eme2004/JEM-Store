@@ -1,4 +1,8 @@
 import './bootstrap';
+import { initPasswordStrength } from './password-strength';
+
+document.addEventListener('DOMContentLoaded', initPasswordStrength);
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const announcements = window.jemAnnouncements ?? [];

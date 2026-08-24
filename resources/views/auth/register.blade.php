@@ -86,6 +86,41 @@
                                     {{ $message }}
                                 </div>
                             @enderror
+
+                            <div class="password-strength" data-password-strength data-target="#password">
+                                <div class="password-strength-bars">
+                                    <span class="password-strength-bar"></span>
+                                    <span class="password-strength-bar"></span>
+                                    <span class="password-strength-bar"></span>
+                                    <span class="password-strength-bar"></span>
+                                </div>
+
+                                <div class="password-strength-meta">
+                                    <span class="password-strength-label"></span>
+                                    <span class="password-strength-warning">Patrón común</span>
+                                </div>
+
+                                <ul class="password-strength-rules">
+                                    <li data-rule="length" data-label="12 caracteres o más">
+                                        <span class="password-strength-check"></span>
+                                        12 caracteres o más
+                                    </li>
+                                    <li data-rule="case" data-label="mayúsculas y minúsculas">
+                                        <span class="password-strength-check"></span>
+                                        Mayúsculas y minúsculas
+                                    </li>
+                                    <li data-rule="digit" data-label="un número">
+                                        <span class="password-strength-check"></span>
+                                        Un número
+                                    </li>
+                                    <li data-rule="symbol" data-label="un símbolo">
+                                        <span class="password-strength-check"></span>
+                                        Un símbolo
+                                    </li>
+                                </ul>
+
+                                <p class="visually-hidden" aria-live="polite" data-password-strength-announcement></p>
+                            </div>
                         </div>
 
                         <div class="mb-4">
