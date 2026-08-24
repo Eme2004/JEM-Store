@@ -555,6 +555,27 @@ body {
     color: #e8a7b1;
 }
 
+.auth-card--glow .password-strength-bar {
+    background-color: rgba($jem-white, 0.14);
+    color: rgba($jem-white, 0.14);
+}
+
+.auth-card--glow .password-strength-label {
+    color: rgba($jem-white, 0.65);
+}
+
+.auth-card--glow .password-strength-rules li {
+    color: rgba($jem-white, 0.5);
+}
+
+.auth-card--glow .password-strength-check {
+    border-color: rgba($jem-white, 0.25);
+}
+
+.auth-card--glow .password-strength-rules li.is-met {
+    color: $jem-white;
+}
+
 
 // --------------------------------------------------
 // Responsive
