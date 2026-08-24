@@ -106,6 +106,13 @@
     <span>₡{{ number_format($order->subtotal, 0, ',', '.') }}</span>
 </div>
 
+@if ($order->discount > 0)
+    <div class="cart-summary-row cart-summary-discount">
+        <span>Descuento de bienvenida</span>
+        <span>-₡{{ number_format($order->discount, 0, ',', '.') }}</span>
+    </div>
+@endif
+
 <div class="cart-summary-row">
     <span>IVA</span>
     <span>₡{{ number_format($order->tax, 0, ',', '.') }}</span>

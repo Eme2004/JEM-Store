@@ -17,6 +17,7 @@ class Order extends Model
         'order_number',
         'tracking_number',
         'subtotal',
+        'discount',
         'tax',
         'shipping',
         'total',
@@ -38,6 +39,7 @@ class Order extends Model
     {
         return [
             'subtotal' => 'decimal:2',
+            'discount' => 'decimal:2',
             'tax' => 'decimal:2',
             'shipping' => 'decimal:2',
             'total' => 'decimal:2',

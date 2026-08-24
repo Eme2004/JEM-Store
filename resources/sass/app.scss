@@ -1618,6 +1618,27 @@ body {
     min-height: 500px;
     object-fit: cover;
     object-position: center 15%;
+    transition: opacity 0.6s ease;
+}
+
+// Fondo animado (WebGL) que reemplaza la foto del hero cuando el navegador
+// lo soporta y el usuario no pidió menos movimiento; ver resources/js/shader-hero.js.
+// Oculto por defecto: solo se muestra si el JS logra inicializar el canvas
+// (jem-shader-active), así un fallo de WebGL nunca deja el hero sin imagen.
+.jem-hero-shader {
+    position: absolute;
+    inset: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.jem-shader-active .jem-hero-shader {
+    display: block;
+}
+
+.jem-shader-active .jem-home-hero__visual-img {
+    opacity: 0;
 }
 
 .jem-home-hero__visual::after {
@@ -2606,6 +2627,10 @@ body {
     border-bottom: 0;
     font-size: 1.1rem;
     font-weight: 700;
+}
+
+.cart-summary-discount {
+    color: $jem-merlot;
 }
 
 .cart-checkout-button {
