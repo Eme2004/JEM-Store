@@ -8,7 +8,7 @@
   </a>
   <img src="https://img.shields.io/badge/Laravel-12-FF2D20?logo=laravel&logoColor=white" alt="Laravel 12" />
   <img src="https://img.shields.io/badge/PHP-%5E8.2-777BB4?logo=php&logoColor=white" alt="PHP ^8.2" />
-  <img src="https://img.shields.io/badge/tests-118%20passing-2ea44f" alt="118 tests passing" />
+  <img src="https://img.shields.io/badge/tests-120%20passing-2ea44f" alt="120 tests passing" />
   <img src="https://img.shields.io/badge/Pagos-Braintree%20Sandbox-0574EF" alt="Braintree Sandbox" />
 </p>
 
@@ -122,7 +122,7 @@ dígitos.
 php artisan test
 ```
 
-118 tests / 305 assertions cubriendo catálogo, carrito, checkout (pago aprobado,
+120 tests / 307 assertions cubriendo catálogo, carrito, checkout (pago aprobado,
 rechazado, doble envío), cuentas, pedidos, panel admin, reportes y páginas legales.
 
 ## Despliegue

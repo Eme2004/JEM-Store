@@ -1,0 +1,18 @@
+flowchart TD
+    A([Inicio]) --> B[Consultar catálogo]
+    B --> C[Ver detalle de producto]
+    C --> D[Agregar producto al carrito]
+    D --> E[Revisar carrito]
+    E --> F{¿Usuario autenticado?}
+    F -- No --> G[Iniciar sesión / Registrarse]
+    G --> H[Checkout: datos de envío]
+    F -- Sí --> H
+    H --> I[Seleccionar método de pago]
+    I --> J[Procesar pago]
+    J --> K{¿Pago aprobado?}
+    K -- No --> L[Mostrar error y permitir reintentar]
+    L --> I
+    K -- Sí --> M[Crear pedido y descontar stock]
+    M --> N[Mostrar confirmación de compra]
+    N --> O[Consultar historial / seguimiento]
+    O --> P([Fin])

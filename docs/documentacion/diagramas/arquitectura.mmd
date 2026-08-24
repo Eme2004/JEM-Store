@@ -1,0 +1,25 @@
+flowchart LR
+    subgraph Cliente["Cliente / Navegador"]
+        Browser["Blade + Bootstrap + JS"]
+    end
+
+    subgraph Laravel["Laravel 12 (PHP 8.2)"]
+        Routes["routes/web.php"]
+        Controllers["Controllers\n(ProductController, CartController,\nCheckoutController, OrderController,\nReportController, Admin/ProductController)"]
+        Services["Services\n(CartService, CheckoutService,\nReportService, Payments/*)"]
+        Models["Models (Eloquent)\n(Product, Category, Order,\nOrderItem, User)"]
+    end
+
+    DB[("SQLite\ndatabase.sqlite")]
+    Braintree["Braintree Sandbox\n(pasarela de pago)"]
+    Dompdf["barryvdh/laravel-dompdf\n(reportes PDF)"]
+
+    Browser -- "HTTP request" --> Routes
+    Routes --> Controllers
+    Controllers --> Services
+    Services --> Models
+    Controllers --> Models
+    Models -- "Eloquent ORM" --> DB
+    Services -- "sale() / clientToken()" --> Braintree
+    Controllers -- "loadView()" --> Dompdf
+    Controllers -- "Blade view" --> Browser
