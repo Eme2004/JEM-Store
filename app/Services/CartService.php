@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Exceptions\CartException;
 use App\Models\Product;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CartService
@@ -157,9 +158,33 @@ class CartService
         return round((float) $items->sum('subtotal'), 2);
     }
 
+    /**
+     * 10% de bienvenida, solo para usuarios autenticados que nunca han
+     * completado un pedido. Se verifica contra la tabla orders (no una
+     * cookie ni un flag) porque es la única fuente que no se puede borrar
+     * o falsear desde el navegador para reclamar el descuento más de una vez.
+     */
+    public function qualifiesForWelcomeDiscount(): bool
+    {
+        $user = Auth::user();
+
+        return $user !== null && $user->orders()->doesntExist();
+    }
+
+    public function discount(?Collection $items = null): float
+    {
+        if (! $this->qualifiesForWelcomeDiscount()) {
+            return 0.0;
+        }
+
+        return round($this->subtotal($items) * (float) config('store.welcome_discount_rate'), 2);
+    }
+
     public function tax(?Collection $items = null): float
     {
-        return round($this->subtotal($items) * (float) config('store.tax_rate'), 2);
+        $taxable = $this->subtotal($items) - $this->discount($items);
+
+        return round($taxable * (float) config('store.tax_rate'), 2);
     }
 
     public function shipping(?Collection $items = null): float
@@ -180,7 +205,10 @@ class CartService
         $items ??= $this->items();
 
         return round(
-            $this->subtotal($items) + $this->tax($items) + $this->shipping($items),
+            $this->subtotal($items)
+                - $this->discount($items)
+                + $this->tax($items)
+                + $this->shipping($items),
             2
         );
     }

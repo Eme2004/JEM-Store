@@ -1618,6 +1618,7 @@ body {
     min-height: 500px;
     object-fit: cover;
     object-position: center 15%;
+    transition: opacity 0.6s ease;
 }
 
 .jem-home-hero__visual::after {
@@ -2606,6 +2607,10 @@ body {
     border-bottom: 0;
     font-size: 1.1rem;
     font-weight: 700;
+}
+
+.cart-summary-discount {
+    color: $jem-merlot;
 }
 
 .cart-checkout-button {

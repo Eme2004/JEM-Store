@@ -260,6 +260,13 @@
                                 <span>₡{{ number_format($subtotal, 0, ',', '.') }}</span>
                             </div>
 
+                            @if ($discount > 0)
+                                <div class="cart-summary-row cart-summary-discount">
+                                    <span>Descuento de bienvenida (10%)</span>
+                                    <span>-₡{{ number_format($discount, 0, ',', '.') }}</span>
+                                </div>
+                            @endif
+
                             <div class="cart-summary-row">
                                 <span>IVA</span>
                                 <span>₡{{ number_format($tax, 0, ',', '.') }}</span>

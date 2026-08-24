@@ -100,7 +100,10 @@ class CheckoutTest extends TestCase
 
     public function test_checkout_calculates_tax(): void
     {
+        // Usuario con un pedido previo: no califica para el descuento de
+        // bienvenida, así que el IVA se calcula sobre el subtotal completo.
         $user = User::factory()->create();
+        Order::factory()->create(['user_id' => $user->id]);
         $product = $this->createProduct(['price' => 10000]);
 
         $this->actingAs($user);
@@ -109,6 +112,54 @@ class CheckoutTest extends TestCase
         $response = $this->get(route('checkout.index'));
 
         $response->assertViewHas('tax', 1300.0);
+    }
+
+    public function test_checkout_applies_welcome_discount_on_first_purchase(): void
+    {
+        $user = User::factory()->create();
+        $product = $this->createProduct(['price' => 10000]);
+
+        $this->actingAs($user);
+        $this->addToCart($product, 1);
+
+        $response = $this->get(route('checkout.index'));
+
+        $response->assertViewHas('discount', 1000.0);
+        // IVA sobre el subtotal ya descontado: (10000 - 1000) * 0.13.
+        $response->assertViewHas('tax', 1170.0);
+        // total = subtotal - descuento + IVA + envío (10000 - 1000 + 1170 + 2500).
+        $response->assertViewHas('total', 12670.0);
+    }
+
+    public function test_checkout_does_not_apply_welcome_discount_after_first_order(): void
+    {
+        $user = User::factory()->create();
+        Order::factory()->create(['user_id' => $user->id]);
+        $product = $this->createProduct(['price' => 10000]);
+
+        $this->actingAs($user);
+        $this->addToCart($product, 1);
+
+        $response = $this->get(route('checkout.index'));
+
+        $response->assertViewHas('discount', 0.0);
+    }
+
+    public function test_checkout_persists_welcome_discount_on_the_order(): void
+    {
+        $user = User::factory()->create();
+        $product = $this->createProduct(['price' => 10000]);
+
+        $this->actingAs($user);
+        $this->addToCart($product, 1);
+
+        $token = $this->checkoutToken();
+        $this->post(route('checkout.store'), $this->validShippingData(['checkout_token' => $token]));
+
+        $order = Order::first();
+
+        $this->assertEquals(1000.0, (float) $order->discount);
+        $this->assertEquals(12670.0, (float) $order->total);
     }
 
     public function test_checkout_calculates_shipping(): void

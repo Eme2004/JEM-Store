@@ -1,0 +1,55 @@
+@startuml caso-uso-compra
+title Diagrama de caso de uso - Proceso de compra en JEM Store
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam backgroundColor #FFFFFF
+skinparam actorStyle awesome
+skinparam usecase {
+    BackgroundColor #F5F5F5
+    BorderColor #444444
+    ArrowColor #444444
+}
+
+actor "Cliente" as Cliente
+actor "Pasarela de pago\n(Braintree Sandbox)" as Braintree
+
+rectangle "JEM Store" {
+    usecase "Consultar catálogo" as UC1
+    usecase "Buscar y filtrar productos" as UC2
+    usecase "Ver detalle de producto" as UC3
+    usecase "Agregar producto al carrito" as UC4
+    usecase "Gestionar carrito" as UC5
+    usecase "Realizar checkout" as UC7
+    usecase "Autenticarse" as UC6
+    usecase "Ingresar datos de envío" as UC8
+    usecase "Seleccionar método de pago" as UC9
+    usecase "Procesar pago" as UC10
+    usecase "Crear pedido" as UC11
+    usecase "Mostrar confirmación de compra" as UC12
+    usecase "Consultar historial de pedidos" as UC13
+    usecase "Consultar seguimiento del pedido" as UC14
+}
+
+Cliente --> UC1
+Cliente --> UC4
+Cliente --> UC5
+Cliente --> UC7
+Cliente --> UC13
+
+UC2 .> UC1 : <<extend>>
+UC3 .> UC1 : <<extend>>
+UC4 .> UC3 : <<extend>>
+
+UC7 .> UC6 : <<include>>
+UC7 .> UC8 : <<include>>
+UC7 .> UC9 : <<include>>
+UC9 .> UC10 : <<include>>
+UC10 .> UC11 : <<include>>
+UC11 .> UC12 : <<include>>
+
+UC10 --> Braintree
+
+UC14 .> UC13 : <<extend>>
+
+@enduml

@@ -43,6 +43,7 @@ class CheckoutController extends Controller
         return view('checkout.index', [
             'items' => $items,
             'subtotal' => $this->cart->subtotal($items),
+            'discount' => $this->cart->discount($items),
             'tax' => $this->cart->tax($items),
             'shipping' => $this->cart->shipping($items),
             'total' => $this->cart->total($items),
